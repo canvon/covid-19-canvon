@@ -1,0 +1,8 @@
+set terminal qt size 1024, 768
+set datafile separator comma
+set xdata time
+set xtics format "%F"
+set y2tics
+TC(Dummy) = timecolumn(1,"%s")
+SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
+plot 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation("Germany", column("totalCases"))) title "bestaetigte Faelle Deutschland" with lines, '' using (TC(0)):(SelectLocation("Germany", column("newCases"))) axis x1y2 title "neue bestaetigte Faelle Deutschland" with lines
