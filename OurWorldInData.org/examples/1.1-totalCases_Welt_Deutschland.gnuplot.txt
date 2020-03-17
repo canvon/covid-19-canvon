@@ -1,0 +1,5 @@
+set datafile separator comma
+set xdata time
+set xtics format "%F"
+SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
+plot 'full_data_for_gnuplot.csv' using (timecolumn(1,"%s")):(SelectLocation("World", column("totalCases"))) title "Welt" with lines, '' using (timecolumn(1,"%s")):(SelectLocation("Germany", column("totalCases"))) title "Deutschland" with lines
