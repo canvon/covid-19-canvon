@@ -6,8 +6,9 @@ use warnings;
 use DateTime;
 
 defined($_ = <>) or die("Head line missing: $!\n");
-my $delim = ' ';
-s/,/$delim/g;
+#my $delim = ' ';
+#s/,/$delim/g;
+my $delim = ',';
 s/_([a-z])/\U$1/g;
 print;
 
