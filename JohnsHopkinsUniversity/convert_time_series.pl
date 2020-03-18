@@ -48,11 +48,11 @@ while (<>) {
 		my $loc_ref = $locations{$region};
 		my $loc_dp_ref = $loc_ref->{data_points};
 		my $i = 0;
-		while ($i < scalar(@data_points) &&
+		while ($i < scalar(@data_points) ||
 		       $i < scalar(@$loc_dp_ref))
 		{
 			$loc_dp_ref->[$i] = 0 unless defined($loc_dp_ref->[$i]);
-			$loc_dp_ref->[$i] += $data_points[$i];
+			$loc_dp_ref->[$i] += $data_points[$i] if defined($data_points[$i]);
 			$i++;
 		}
 	}
@@ -62,6 +62,28 @@ while (<>) {
 		};
 	}
 }
+
+
+# Post-process.
+
+my @world_data_points;
+
+for my $location (sort keys %locations) {
+	my $loc_ref = $locations{$location};
+	my $loc_dp_ref = $loc_ref->{data_points};
+	my $i = 0;
+	while ($i < scalar(@world_data_points) ||
+	       $i < scalar(@$loc_dp_ref))
+	{
+		$world_data_points[$i] = 0 unless defined($world_data_points[$i]);
+		$world_data_points[$i] += $loc_dp_ref->[$i] if defined($loc_dp_ref->[$i]);
+		$i++;
+	}
+}
+
+$locations{"World"} = {
+	data_points => \@world_data_points,
+};
 
 
 # Output head line.
