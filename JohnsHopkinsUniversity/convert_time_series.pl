@@ -95,40 +95,76 @@ sub loadData($)
 }
 
 
-sub outputData($$)
+sub outputDataGlobal($$)
 {
 	my ($unix_dates, $locations) = @_;
 
 	# Output head line.
-	print("date,location,new,total\n");
+	my $world_ref = $locations->{"World"};
+	my @keys = sort keys %$world_ref;
+	local $_;
+	print("date,location");
+	print(",new$_")   for (@keys);
+	print(",total$_") for (@keys);
+	print("\n");
 
 	for my $location (sort keys %$locations) {
 		my $loc_ref = $locations->{$location};
-		my $loc_dp_ref = $loc_ref->{data_points};
 
-		for my $i (0 .. scalar(@$loc_dp_ref) - 1) {
+		for my $i (0 .. scalar(@$unix_dates) - 1) {
 			my $x = $unix_dates->[$i];
-			my $y = $loc_dp_ref->[$i];
-			my $yPrev;
-			$yPrev = $loc_dp_ref->[$i - 1] if $i >= 1;
 
-			my $new = defined($yPrev) ? $y - $yPrev : '';
+			my (@newValues, @yValues);
+			for my $key (@keys) {
+				my $y = $loc_ref->{$key}[$i];
+				my $yPrev;
+				$yPrev = $loc_ref->{$key}[$i - 1] if $i >= 1;
 
-			print(join($delim, $x, '"'.$location.'"', $new, $y) . "\n");
+				my $new = defined($yPrev) ? $y - $yPrev : '';
+
+				push(@newValues, $new);
+				push(@yValues, $y);
+			}
+
+			print(join($delim, $x, '"'.$location.'"', @newValues, @yValues) . "\n");
 		}
 	}
 }
 
 
-scalar(@ARGV) <= 1 or die("Usage: $0 [input.csv] >output.csv\n");
+scalar(@ARGV) >= 1 or die("Usage: $0 input-foo.csv input-bar.csv [...] >output.csv\n");
 
-my $filename = scalar(@ARGV) ? $ARGV[0] : '-';
+my $unix_dates_global;
+my $locations_global = {};
 
-open(my $fh, '<', $filename) or die("Cannot open input file \"$filename\": $!\n");
+for my $filename (@ARGV) {
 
-my ($unix_dates, $locations) = loadData($fh);
+	$filename =~ m#-([^-/]+)\.csv$# or die("Cannot grok input file name \"$filename\"\n");
+	my $key = $1;
+	#$key =~ s/^([A-Z])/\L$1/;  # Lower-case first character.
 
-outputData($unix_dates, $locations);
+	open(my $fh, '<', $filename) or die("Cannot open input file \"$filename\": $!\n");
+
+	my ($unix_dates, $locations) = loadData($fh);
+
+	if (defined($unix_dates_global)) {
+		die("Non-matching input dates!\n") unless scalar(@$unix_dates_global) == scalar(@$unix_dates);
+		for my $i (0 .. scalar(@$unix_dates) - 1) {
+			die("Non-matching input date #$i\n") unless $unix_dates_global->[$i] == $unix_dates->[$i];
+		}
+	}
+	else {
+		$unix_dates_global = $unix_dates;
+	}
+
+	# Merge.
+	for my $location (keys %$locations) {
+		my $loc_ref = $locations->{$location};
+		$locations_global->{$location}{$key} = $loc_ref->{data_points};
+	}
+}
+
+outputDataGlobal($unix_dates_global, $locations_global);
 
 
 exit(0);
