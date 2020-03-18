@@ -8,101 +8,127 @@ use DateTime;
 # Input:  Province/State,Country/Region,Lat,Long,1/22/20,1/23/20,1/24/20,...
 # Output: date,location,new,total
 
-my $head;
-defined($head = <>) or die("Head line missing: $!\n");
-# CR/LF
-chomp($head);
-$head =~ s/\r$//;
+our $delim = ',';
 
-my $delim = ',';
-my ($head_state, $head_region, $head_lat, $head_long, @head_dates) = split(/$delim/, $head);
 
-die("Unrecognized head line!\n") unless
-  $head_state  eq 'Province/State' &&
-  $head_region eq 'Country/Region' &&
-  $head_lat    eq 'Lat'            &&
-  $head_long   eq 'Long';
+sub loadData($)
+{
+	my ($fh) = @_;
 
-my @unix_dates = map {
-	m#^(\d+)/(\d+)/(\d+)$# or die("Invalid date \"$_\".\n");
-	my $date = DateTime->new(month => $1, day => $2, year => 2000+$3);
-	$date->epoch;
-} (@head_dates);
-
-my %locations;
-while (<>) {
+	my $head;
+	defined($head = <$fh>) or die("Head line missing: $!\n");
 	# CR/LF
-	chomp;
-	s/\r$//;
+	chomp($head);
+	$head =~ s/\r$//;
 
-	# Try to invert "Korea, South" and friends, to get rid of commas in quoted strings.
-	s/"([^"]+), ([^"]+)"/"$2 $1"/;
-	print STDERR "Problem line: $_\n" if /,"[^"]*,/;
+	my ($head_state, $head_region, $head_lat, $head_long, @head_dates) = split(/$delim/, $head);
 
-	my ($state, $region, $lat, $long, @data_points) = split(/$delim/, $_, -1);
-	$region =~ s/^"(.*)"$/$1/;  # Un-quote, the more-probably-not-needed-here way. ...
-	print STDERR "Problem region: $region\n" if $region =~ /"/;
+	die("Unrecognized head line!\n") unless
+	  $head_state  eq 'Province/State' &&
+	  $head_region eq 'Country/Region' &&
+	  $head_lat    eq 'Lat'            &&
+	  $head_long   eq 'Long';
 
-	if (exists($locations{$region})) {
-		# Merge multiple states of the same region.
-		my $loc_ref = $locations{$region};
+	my @unix_dates = map {
+		m#^(\d+)/(\d+)/(\d+)$# or die("Invalid date \"$_\".\n");
+		my $date = DateTime->new(month => $1, day => $2, year => 2000+$3);
+		$date->epoch;
+	} (@head_dates);
+
+	my %locations;
+	while (<$fh>) {
+		# CR/LF
+		chomp;
+		s/\r$//;
+
+		# Try to invert "Korea, South" and friends, to get rid of commas in quoted strings.
+		s/"([^"]+), ([^"]+)"/"$2 $1"/;
+		print STDERR "Problem line: $_\n" if /,"[^"]*,/;
+
+		my ($state, $region, $lat, $long, @data_points) = split(/$delim/, $_, -1);
+		$region =~ s/^"(.*)"$/$1/;  # Un-quote, the more-probably-not-needed-here way. ...
+		print STDERR "Problem region: $region\n" if $region =~ /"/;
+
+		if (exists($locations{$region})) {
+			# Merge multiple states of the same region.
+			my $loc_ref = $locations{$region};
+			my $loc_dp_ref = $loc_ref->{data_points};
+			my $i = 0;
+			while ($i < scalar(@data_points) ||
+			       $i < scalar(@$loc_dp_ref))
+			{
+				$loc_dp_ref->[$i] = 0 unless defined($loc_dp_ref->[$i]);
+				$loc_dp_ref->[$i] += $data_points[$i] if defined($data_points[$i]);
+				$i++;
+			}
+		}
+		else {
+			$locations{$region} = {
+				data_points => \@data_points,
+			};
+		}
+	}
+
+
+	# Post-process.
+
+	my @world_data_points;
+
+	for my $location (sort keys %locations) {
+		my $loc_ref = $locations{$location};
 		my $loc_dp_ref = $loc_ref->{data_points};
 		my $i = 0;
-		while ($i < scalar(@data_points) ||
+		while ($i < scalar(@world_data_points) ||
 		       $i < scalar(@$loc_dp_ref))
 		{
-			$loc_dp_ref->[$i] = 0 unless defined($loc_dp_ref->[$i]);
-			$loc_dp_ref->[$i] += $data_points[$i] if defined($data_points[$i]);
+			$world_data_points[$i] = 0 unless defined($world_data_points[$i]);
+			$world_data_points[$i] += $loc_dp_ref->[$i] if defined($loc_dp_ref->[$i]);
 			$i++;
 		}
 	}
-	else {
-		$locations{$region} = {
-			data_points => \@data_points,
-		};
+
+	$locations{"World"} = {
+		data_points => \@world_data_points,
+	};
+
+	return (\@unix_dates, \%locations);
+}
+
+
+sub outputData($$)
+{
+	my ($unix_dates, $locations) = @_;
+
+	# Output head line.
+	print("date,location,new,total\n");
+
+	for my $location (sort keys %$locations) {
+		my $loc_ref = $locations->{$location};
+		my $loc_dp_ref = $loc_ref->{data_points};
+
+		for my $i (0 .. scalar(@$loc_dp_ref) - 1) {
+			my $x = $unix_dates->[$i];
+			my $y = $loc_dp_ref->[$i];
+			my $yPrev;
+			$yPrev = $loc_dp_ref->[$i - 1] if $i >= 1;
+
+			my $new = defined($yPrev) ? $y - $yPrev : '';
+
+			print(join($delim, $x, '"'.$location.'"', $new, $y) . "\n");
+		}
 	}
 }
 
 
-# Post-process.
+scalar(@ARGV) <= 1 or die("Usage: $0 [input.csv] >output.csv\n");
 
-my @world_data_points;
+my $filename = scalar(@ARGV) ? $ARGV[0] : '-';
 
-for my $location (sort keys %locations) {
-	my $loc_ref = $locations{$location};
-	my $loc_dp_ref = $loc_ref->{data_points};
-	my $i = 0;
-	while ($i < scalar(@world_data_points) ||
-	       $i < scalar(@$loc_dp_ref))
-	{
-		$world_data_points[$i] = 0 unless defined($world_data_points[$i]);
-		$world_data_points[$i] += $loc_dp_ref->[$i] if defined($loc_dp_ref->[$i]);
-		$i++;
-	}
-}
+open(my $fh, '<', $filename) or die("Cannot open input file \"$filename\": $!\n");
 
-$locations{"World"} = {
-	data_points => \@world_data_points,
-};
+my ($unix_dates, $locations) = loadData($fh);
 
+outputData($unix_dates, $locations);
 
-# Output head line.
-print("date,location,new,total\n");
-
-for my $location (sort keys %locations) {
-	my $loc_ref = $locations{$location};
-	my $loc_dp_ref = $loc_ref->{data_points};
-
-	for my $i (0 .. scalar(@$loc_dp_ref) - 1) {
-		my $x = $unix_dates[$i];
-		my $y = $loc_dp_ref->[$i];
-		my $yPrev;
-		$yPrev = $loc_dp_ref->[$i - 1] if $i >= 1;
-
-		my $new = defined($yPrev) ? $y - $yPrev : '';
-
-		print(join($delim, $x, '"'.$location.'"', $new, $y) . "\n");
-	}
-}
 
 exit(0);
