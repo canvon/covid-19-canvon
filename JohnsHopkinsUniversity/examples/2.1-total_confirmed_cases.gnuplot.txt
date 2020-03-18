@@ -1,0 +1,12 @@
+# Based on: ../OurWorldInData.org/examples/3.1-total_confirmed_cases_in_logarithmic_scale.gnuplot.txt
+set terminal qt size 1024, 768
+set datafile separator comma
+set xdata time
+set xtics format "%F"
+TC(Dummy) = timecolumn(1,"%s")
+SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
+set title "Total confirmed cases (Johns Hopkins University)"
+#set logscale y
+#set title "Total confirmed cases in logarithmic scale (Johns Hopkins University)"
+set key left
+plot for [Location in "World China Japan Germany Italy France International"] 'confirmed_for_gnuplot.csv' using (TC(0)):(SelectLocation(Location, column("total"))) title Location with lines
