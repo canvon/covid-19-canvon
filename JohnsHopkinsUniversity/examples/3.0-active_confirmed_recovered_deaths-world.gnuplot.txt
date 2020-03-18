@@ -1,0 +1,10 @@
+set terminal qt size 1024, 768
+set datafile separator comma
+set xdata time
+set xtics format "%F"
+TC(Dummy) = timecolumn(1,"%s")
+SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
+set key left
+Location = "World"
+set title Location
+plot 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title "active cases" with lines, '' using (TC(0)):(SelectLocation(Location, column("totalConfirmed"))) title "total confirmed" with lines, '' using (TC(0)):(SelectLocation(Location, column("totalRecovered"))) title "total recovered" with lines, '' using (TC(0)):(SelectLocation(Location, column("totalDeaths"))) title "total deaths" with lines
