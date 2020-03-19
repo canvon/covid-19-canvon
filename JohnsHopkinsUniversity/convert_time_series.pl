@@ -31,7 +31,9 @@ sub loadData($)
 
 	my @unix_dates = map {
 		m#^(\d+)/(\d+)/(\d+)$# or die("Invalid date \"$_\".\n");
-		my $date = DateTime->new(month => $1, day => $2, year => 2000+$3);
+		my $date = DateTime->new(month => $1, day => $2, year => 2000+$3,
+		                         hour => 23, minute => 59, second => 59,
+		                         time_zone => 'UTC');
 		$date->epoch;
 	} (@head_dates);
 
