@@ -25,5 +25,6 @@ set xtics format "%F"
 @ARG3
 
 # Predefine some helper functions, to make the actual plot commands shorter.
+TC(Dummy) = timecolumn(1,"%s")
 SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
 
