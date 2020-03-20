@@ -1,7 +1,6 @@
-set terminal qt size 1024, 768
-set datafile separator comma
-set xdata time
-set xtics format "%F"
+if (!exists("CommonLoaded") || CommonLoaded == 0) {
+  call "examples/0.1-common.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+}
+
 set logscale y
-SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
-plot 'full_data_for_gnuplot.csv' using (timecolumn(1,"%s")):(SelectLocation("World", column("totalCases"))) title "Welt" with lines, '' using (timecolumn(1,"%s")):(SelectLocation("Germany", column("totalCases"))) title "Deutschland" with lines
+call "examples/1.1-totalCases_Welt_Deutschland.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
