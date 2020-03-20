@@ -1,2 +1,7 @@
 # Source data with its own version tracking in the git clone.
 /COVID-19/
+
+# Your personal archive; should not be committed to git.
+# Copies of source data files, and generated plot image files,
+# will be put here.
+/archive/
