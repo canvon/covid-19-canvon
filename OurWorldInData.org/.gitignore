@@ -1,2 +1,10 @@
 # Downloaded.
-full_data.csv
+/full_data.csv
+
+# Your personal archive; should not be committed to git.
+# Copies of source data files, and generated plot image files,
+# will be put here.
+/archive/
+
+# Possibly left over by the build system.
+*.stamp
