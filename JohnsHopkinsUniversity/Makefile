@@ -31,7 +31,7 @@ full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 plot-examples: full_data_for_gnuplot.csv
 	mkdir -pv "archive/plots"
 	mkdir -v "archive/plots/$(TIMESTAMP)"  # It is an error if directory already existed...
-	@SOURCEDATA_TIMESTAMP=$$(date --date=@$$(grep World full_data_for_gnuplot.csv | tail -1 | cut -d, -f1) '+%Y%m%d') && \
+	@SOURCEDATA_TIMESTAMP=$$(TZ=UTC date --date=@$$(grep World full_data_for_gnuplot.csv | tail -1 | cut -d, -f1) '+%Y%m%d') && \
 	  for I in examples/[1-9]*.gnuplot.txt; do \
 	    echo "Plotting $$I ..."; \
 	    gnuplot -c "$$I" png "archive/plots/$(TIMESTAMP)/covid19-jhu-$${SOURCEDATA_TIMESTAMP}-$$(basename "$$I" .gnuplot.txt).png" || exit; \
