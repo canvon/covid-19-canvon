@@ -1,0 +1,29 @@
+
+# Avoid duplicating what this file set up.
+CommonLoaded = 1
+
+# Allow terminal type to be given as first argument to "call".
+# Fall back to qt (interactive graphics) if none was given.
+TermType = exists("ARG1") && strlen(ARG1) > 0 ? ARG1 : "qt"
+set terminal @TermType size 1024,768
+
+# When using another terminal type, an output might need to be given.
+TermOut = exists("ARG2") && strlen(ARG2) > 0 ? ARG2 : ""
+if (TermOut eq "" && TermType eq "png") {
+  TermOut = "out.png"
+}
+if (TermOut ne "") {
+  set output TermOut
+}
+
+# General preparation for our data environment.
+set datafile separator comma
+set xdata time
+set xtics format "%F"
+
+# A chance to do anything else that might be needed.
+@ARG3
+
+# Predefine some helper functions, to make the actual plot commands shorter.
+SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
+
