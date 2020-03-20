@@ -12,9 +12,10 @@ timestamp:
 update: full_data.csv
 
 full_data.csv:
-	@rm -f "$@.prev.stamp"
-	@if [ -e "$@" ]; then touch --reference="$@" "$@.prev.stamp"; fi
+	@rm -f "$@.prev.sha256.tmp"
+	@if [ -e "$@" ]; then sha256sum "$@" >"$@.prev.sha256.tmp"; fi
 	wget --timestamping --no-if-modified-since -i "$@.url.txt"
-	@if ! [ -e "$@.prev.stamp" ] || [ "$@" -nt "$@.prev.stamp" ]; then \
+	@if ! [ -e "$@.prev.sha256.tmp" ] || ! sha256sum -c "$@.prev.sha256.tmp"; then \
 	  mkdir -pv "archive/source_data" && \
 	  cp -avi "$@" "archive/source_data/$(basename $@)-$(TIMESTAMP).$(suffix $@)"; fi
+	@rm -f "$@.prev.sha256.tmp"

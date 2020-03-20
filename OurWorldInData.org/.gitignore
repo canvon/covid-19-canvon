@@ -8,3 +8,4 @@
 
 # Possibly left over by the build system.
 *.stamp
+*.tmp
