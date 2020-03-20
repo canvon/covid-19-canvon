@@ -2,4 +2,5 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
   call "examples/0.1-common.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
 }
 
+set y2tics
 plot 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation("World", column("totalCases"))) title "bestaetigte Faelle Welt" with lines, '' using (TC(0)):(SelectLocation("Germany", column("totalCases"))) title "bestaetigte Faelle Deutschland" with lines, '' using (TC(0)):(SelectLocation("World", column("newCases"))) axis x1y2 title "neue Faelle Welt" with lines, '' using (TC(0)):(SelectLocation("Germany", column("newCases"))) axis x1y2 title "neue Faelle Deutschland" with lines
