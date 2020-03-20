@@ -2,4 +2,4 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
   call "../include/common.gnuplot.txt" ARG1 ARG2 ARG3
 }
 
-call "examples/3.0-active_confirmed_recovered_deaths.gnuplot.inc.txt" ARG1 ARG2 ARG3 "World"
+call "examples/3.0-active_confirmed_recovered_deaths.gnuplot.inc.txt" ARG1 ARG2 ARG3 "China"

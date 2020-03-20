@@ -1,0 +1,8 @@
+if (!exists("CommonLoaded") || CommonLoaded == 0) {
+  call "../include/common.gnuplot.txt" ARG1 ARG2 ARG3
+}
+
+set key left
+Location = ARG4
+set title Location." (data from Johns Hopkins University)"
+plot 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title "active cases" with lines, '' using (TC(0)):(SelectLocation(Location, column("totalConfirmed"))) title "total confirmed" with lines, '' using (TC(0)):(SelectLocation(Location, column("totalRecovered"))) title "total recovered" with lines, '' using (TC(0)):(SelectLocation(Location, column("totalDeaths"))) title "total deaths" with lines
