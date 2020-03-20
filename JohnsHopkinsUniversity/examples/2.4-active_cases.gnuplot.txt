@@ -1,9 +1,7 @@
-set terminal qt size 1024, 768
-set datafile separator comma
-set xdata time
-set xtics format "%F"
-TC(Dummy) = timecolumn(1,"%s")
-SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
+if (!exists("CommonLoaded") || CommonLoaded == 0) {
+  call "../include/common.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+}
+
 set title "Currently active cases (Johns Hopkins University)"
 set key left
 plot for [Location in "World China Japan Germany Italy France"] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title Location with lines

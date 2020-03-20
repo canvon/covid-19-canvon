@@ -1,10 +1,9 @@
 # Based on: ../OurWorldInData.org/examples/3.1-total_confirmed_cases_in_logarithmic_scale.gnuplot.txt
-set terminal qt size 1024, 768
-set datafile separator comma
-set xdata time
-set xtics format "%F"
-TC(Dummy) = timecolumn(1,"%s")
-SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
+
+if (!exists("CommonLoaded") || CommonLoaded == 0) {
+  call "../include/common.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+}
+
 set title "Total confirmed cases (Johns Hopkins University)"
 #set logscale y
 #set title "Total confirmed cases in logarithmic scale (Johns Hopkins University)"
