@@ -14,7 +14,7 @@ update: full_data.csv
 full_data.csv:
 	@rm -f "$@.prev.stamp"
 	@[ -e "$@" ] && touch --reference="$@" "$@.prev.stamp"
-	wget --timestamping -i "$@.url.txt"
+	wget --timestamping --no-if-modified-since -i "$@.url.txt"
 	@if [ -e "$@.prev.stamp" ] && [ "$@" -nt "$@.prev.stamp" ]; then \
 	  mkdir -pv "archive/source_data" && \
 	  cp -avi "$@" "archive/source_data/$(basename $@)-$(TIMESTAMP).$(suffix $@)"; fi
