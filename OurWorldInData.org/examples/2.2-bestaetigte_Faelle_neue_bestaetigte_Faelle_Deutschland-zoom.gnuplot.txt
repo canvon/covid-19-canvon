@@ -1,8 +1,6 @@
-set terminal qt size 1024, 768
-set datafile separator comma
-set xdata time
-set xtics format "%F"
+if (!exists("CommonLoaded") || CommonLoaded == 0) {
+  call "examples/0.1-common.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+}
+
 set y2tics
-TC(Dummy) = timecolumn(1,"%s")
-SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
 plot [strptime("%Y-%m-%d", "2020-02-27"):] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation("Germany", column("totalCases"))) title "bestaetigte Faelle Deutschland" with lines, '' using (TC(0)):(SelectLocation("Germany", column("newCases"))) axis x1y2 title "neue bestaetigte Faelle Deutschland" with lines
