@@ -11,11 +11,14 @@ timestamp:
 
 
 # (Always try to download again if requested.)
-.PHONY: update git-pull
+.PHONY: update git-clone git-pull
 
 update: git-pull full_data_for_gnuplot.csv
 
-git-pull:
+git-clone COVID-19:
+	git clone $$(cat COVID-19.git_clone_url.txt)
+
+git-pull: COVID-19
 	cd COVID-19 && git pull --ff-only
 
 TIMESERIES_FILES := $(wildcard COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-*.csv)
