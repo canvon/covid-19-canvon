@@ -17,7 +17,9 @@ while (<>) {
 	my ($date_raw, $location, @data) = split(/,/, $_, -1);
 
 	$date_raw =~ /^(\d+)-(\d+)-(\d+)$/ or die("Invalid date \"$date_raw\".\n");
-	my $date = DateTime->new(year => $1, month => $2, day => $3);
+	my $date = DateTime->new(year => $1, month => $2, day => $3,
+	                         hour => 23, minute => 59, second => 59,
+	                         time_zone => 'UTC');
 	my $date_out = $date->epoch;
 
 	print($date_out . $delim . '"'.$location.'"' . $delim . join($delim, @data) . "\n");
