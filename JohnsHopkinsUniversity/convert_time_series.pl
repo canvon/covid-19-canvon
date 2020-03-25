@@ -166,6 +166,8 @@ for my $filename (@ARGV) {
 		my $loc_ref = $locations->{$location};
 		$locations_global->{$location}{$key} = $loc_ref->{data_points};
 	}
+
+	close($fh) or die("Cannot close input file \"$filename\": $!\n");
 }
 
 outputDataGlobal($unix_dates_global, $locations_global);
