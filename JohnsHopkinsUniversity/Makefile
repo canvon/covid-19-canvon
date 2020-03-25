@@ -21,7 +21,7 @@ git-clone COVID-19:
 git-pull: COVID-19
 	cd COVID-19 && git pull --ff-only
 
-TIMESERIES_FILES := $(wildcard COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-*.csv)
+TIMESERIES_FILES := $(wildcard COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_*_global.csv)
 
 full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 	./convert_time_series.pl $(TIMESERIES_FILES) >"$@"

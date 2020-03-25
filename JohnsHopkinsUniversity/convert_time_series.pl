@@ -141,9 +141,11 @@ my $locations_global = {};
 
 for my $filename (@ARGV) {
 
-	$filename =~ m#-([^-/]+)\.csv$# or die("Cannot grok input file name \"$filename\"\n");
+	#$filename =~ m#-([^-/]+)\.csv$#
+	$filename =~ m#_([^_/]+)_global\.csv$#
+	  or die("Cannot grok input file name \"$filename\"\n");
 	my $key = $1;
-	#$key =~ s/^([A-Z])/\L$1/;  # Lower-case first character.
+	$key =~ s/^([a-z])/\U$1/;  # Up-case first character.
 
 	open(my $fh, '<', $filename) or die("Cannot open input file \"$filename\": $!\n");
 
