@@ -29,6 +29,7 @@ our $base_dir = shift;
 
 our $date_end = time;
 our %locations;
+our @dates;
 
 
 # Open input files, read input, parse, merge.
@@ -43,6 +44,8 @@ for (
 		warn("Warning: Daily report missing for " . $date->ymd . ": $filename\n");
 		next;
 	}
+
+	push(@dates, $date->clone);
 
 	open(my $fh, '<', $filename) or die("Cannot open input file \"$filename\": $!\n");
 
@@ -103,11 +106,58 @@ for (
 		my $key = $region . $delim . $state;
 
 		$locations{$key} = [] unless defined($locations{$key});
-		push(@{$locations{$key}}, { date => $date, target => $target });
+		push(@{$locations{$key}}, { date => $date->clone, target => $target });
 	}
 
 
 	close($fh) or die("Cannot close input file \"$filename\": $!\n");
+}
+
+
+# Output extracted & merged data.
+
+# Head. (Field names.)
+print("Province/State,Country/Region,Lat,Long,", join($delim, map {
+	my $tmp = $_->mdy('/');
+	$tmp =~ s#(^|/)0#$1#;  # Remove leading zeroes.
+	$tmp =~ s#/20(\d\d)$#/$1#;  # Make a 2-digit year.
+	$tmp
+} (@dates)), "\n");
+
+# Data.
+for my $key (sort keys %locations) {
+	my ($region, $state) = split(/$delim/, $key);
+	my @dataPoints = @{$locations{$key}};
+
+	# State,Region,Lat,Long
+	print($state . $delim . $region . $delim . $delim);
+
+	# ,1/22/20,1/23/20,1/24/20,...
+	dates: for my $date (@dates) {
+		while (scalar(@dataPoints) > 0) {
+			my $dataPoint = shift(@dataPoints);
+			my $dp_date   = $dataPoint->{date};
+			my $dp_target = $dataPoint->{target};
+
+			my $comp = DateTime->compare($dp_date, $date);
+			next if ($comp < 0);  # Skip earlier values.
+
+			# Date matches? Output field & go on.
+			if ($comp == 0) {
+				print($delim . $dp_target);
+				next dates;
+			}
+
+			# Date in the future? Restore data point to list,
+			# then drop out of the inner loop.
+			unshift(@dataPoints, $dataPoint);
+			last;
+		}
+
+		# Run out of potential data points? Skip value.
+		print($delim);
+	}
+	print("\n");
 }
 
 
