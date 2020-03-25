@@ -18,8 +18,9 @@ if (TermOut ne "") {
 
 # General preparation for our data environment.
 set datafile separator comma
+set timefmt      "%Y-%m-%d"  # Reading, e.g., from plot range strings.
+set xtics format "%Y-%m-%d"  # Writing to output.
 set xdata time
-set xtics format "%F"
 
 # A chance to do anything else that might be needed.
 @ARG3

@@ -6,4 +6,4 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 
 set ytics nomirror
 set y2tics
-plot [strptime("%Y-%m-%d", "2020-02-27"):] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation("Germany", column("totalConfirmed"))) title "bestaetigte Faelle Deutschland" with lines, '' using (TC(0)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "neue bestaetigte Faelle Deutschland" with lines
+plot ["2020-02-27":] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation("Germany", column("totalConfirmed"))) title "bestaetigte Faelle Deutschland" with lines, '' using (TC(0)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "neue bestaetigte Faelle Deutschland" with lines
