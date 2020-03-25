@@ -25,7 +25,7 @@ DAILY_REPORT_DIR := COVID-19/csse_covid_19_data/csse_covid_19_daily_reports
 DAILY_REPORT_FILES := $(wildcard "$(DAILY_REPORT_DIR)/"*.csv)
 
 time_series_covid19_generated_recovered_global.csv: $(DAILY_REPORT_FILES) generate_time_series.pl
-	./generate_time_series.pl "$(DAILY_REPORT_DIR)" >"$@"
+	TZ=UTC ./generate_time_series.pl "$(DAILY_REPORT_DIR)" >"$@"
 	mkdir -pv "archive/generated_data"
 	cp -avi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
