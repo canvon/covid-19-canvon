@@ -91,6 +91,10 @@ for (
 		my $region = $fields[$fieldColumn{Country}];
 		my $target = $fields[$fieldColumn{$target_field_name}];
 
+		# Skip missing values, so that they can be treated as undefined
+		# in the rest of the code to avoid warnings!
+		next unless defined($target) && $target ne '';
+
 
 		# Un-quote, the more-probably-not-needed-here way. ...
 
