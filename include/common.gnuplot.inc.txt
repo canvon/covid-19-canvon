@@ -22,6 +22,10 @@ set timefmt      "%Y-%m-%d"  # Reading, e.g., from plot range strings.
 set xtics format "%Y-%m-%d"  # Writing to output.
 set xdata time
 
+# Switch from key at the upper-right to upper-left,
+# as the plots will usually end right there. ...
+set key left
+
 # A chance to do anything else that might be needed.
 @ARG3
 

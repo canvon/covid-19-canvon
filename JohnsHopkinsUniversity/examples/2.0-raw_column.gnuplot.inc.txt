@@ -5,5 +5,4 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 }
 
 set title ARG5." (data from Johns Hopkins University)"
-set key left
 plot for [Location in "World China Japan Germany Italy France"] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation(Location, @ARG4)) title Location with lines
