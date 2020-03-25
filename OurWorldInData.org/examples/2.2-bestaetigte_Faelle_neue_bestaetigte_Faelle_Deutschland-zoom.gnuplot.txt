@@ -2,6 +2,5 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
   call "../include/common.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
 }
 
-set ytics nomirror
-set y2tics
-plot ["2020-02-27":] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation("Germany", column("totalCases"))) title "bestaetigte Faelle Deutschland" with lines, '' using (TC(0)):(SelectLocation("Germany", column("newCases"))) axis x1y2 title "neue bestaetigte Faelle Deutschland" with lines
+set xrange ["2020-02-27":*]
+call "examples/2.1-bestaetigte_Faelle_neue_bestaetigte_Faelle_Deutschland.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
