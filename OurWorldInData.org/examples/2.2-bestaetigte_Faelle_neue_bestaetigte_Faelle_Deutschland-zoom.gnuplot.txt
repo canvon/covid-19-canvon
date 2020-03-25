@@ -1,5 +1,5 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
 }
 
 set xrange ["2020-02-27":*]

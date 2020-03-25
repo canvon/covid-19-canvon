@@ -1,5 +1,5 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.txt" ARG1 ARG2 ARG3
+  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3
 }
 
 call "examples/2.0-raw_column.gnuplot.inc.txt" ARG1 ARG2 ARG3 "column(\"totalDeaths\")" "Total deaths"
