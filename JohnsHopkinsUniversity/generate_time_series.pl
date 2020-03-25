@@ -21,15 +21,17 @@ use DateTime;
 
 our $delim = ',';
 
-our $target_field = 'Recovered';
+our $target_field_name = 'Recovered';
 
 scalar(@ARGV) == 1 or die("Usage: $0 BASE_DIR\n");
 
 our $base_dir = shift;
 
 our $date_end = time;
+our %locations;
 
 
+# Open input files, read input, parse, merge.
 for (
 	my $date = DateTime->new(month => 1, day => 22, year => 2020);
 	$date->epoch < $date_end;
@@ -53,7 +55,7 @@ for (
 	chomp($head);
 	$head =~ s/\r$//;
 
-	my @requiredFields = (qw(Province Country), $target_field);
+	my @requiredFields = (qw(Province Country), $target_field_name);
 	my %fieldColumn;
 	my @head_fields = split(/$delim/, $head);
 	for my $i (0 .. $#head_fields) {
@@ -65,11 +67,48 @@ for (
 		}
 	}
 	for my $requiredField (@requiredFields) {
-		exists($fieldColumn{$requiredField}) or die("Required field \"$requiredField\" missing for date " . $date->ymd . ", file \"$filename\"\n");
+		exists($fieldColumn{$requiredField}) or die("Required header field \"$requiredField\" missing for date " . $date->ymd . ", file \"$filename\"\n");
+	}
+
+
+	while (<$fh>) {
+		# CR/LF
+		chomp;
+		s/\r$//;
+
+		# Try to invert "Korea, South" and friends, to get rid of commas in quoted strings.
+		s/"([^",]+), *([^",]+), *([^",]+)"/"$3: $2: $1"/g;  # "Somerset, Maine, US" -> "US: Maine: Somerset"
+		s/"([^",]+), *([^",]+)"/"$2 $1"/g;  # "Korea, South" -> "South Korea"
+		warn("Warning: Problem line for date " . $date->ymd . ", file \"$filename\": $_\n")
+		  if /,"[^"]*,/;
+
+		my @fields = split(/$delim/, $_, -1);
+
+		my $state = $fields[$fieldColumn{Province}];
+		my $region = $fields[$fieldColumn{Country}];
+		my $target = $fields[$fieldColumn{$target_field_name}];
+
+
+		# Un-quote, the more-probably-not-needed-here way. ...
+
+		$state =~ s/^"(.*)"$/$1/;
+		warn("Warning: Problem state for date " . $date->ymd . ", file \"$filename\": $state\n")
+		  if $state =~ /"/;
+
+		$region =~ s/^"(.*)"$/$1/;
+		warn("Warning: Problem region for date " . $date->ymd . ", file \"$filename\": $region\n")
+		  if $region =~ /"/;
+
+
+		my $key = $region . $delim . $state;
+
+		$locations{$key} = [] unless defined($locations{$key});
+		push(@{$locations{$key}}, { date => $date, target => $target });
 	}
 
 
 	close($fh) or die("Cannot close input file \"$filename\": $!\n");
 }
+
 
 exit(0);
