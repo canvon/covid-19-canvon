@@ -129,6 +129,16 @@ for my $key (sort keys %locations) {
 	my ($region, $state) = split(/$delim/, $key);
 	my @dataPoints = @{$locations{$key}};
 
+	my $found = 0;
+	for my $dataPoint (@dataPoints) {
+		my $dp_target = $dataPoint->{target};
+		if (defined($dp_target) && $dp_target > 0) {
+			$found++;
+			last;
+		}
+	}
+	next unless $found;
+
 	# State,Region,Lat,Long
 	print($state . $delim . $region . $delim . $delim);
 
