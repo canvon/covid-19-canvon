@@ -54,6 +54,11 @@ sub loadData($)
 		$region =~ s/^"(.*)"$/$1/;  # Un-quote, the more-probably-not-needed-here way. ...
 		print STDERR "Problem region: $region\n" if $region =~ /"/;
 
+		# Interpret empty values as undef. Important for avoiding warnings, later!
+		for my $data_point (@data_points) {
+			$data_point = undef if $data_point eq '';
+		}
+
 		if (exists($locations{$region})) {
 			# Merge multiple states of the same region.
 			my $loc_ref = $locations{$region};
@@ -125,10 +130,11 @@ sub outputDataGlobal($$)
 				my $yPrev;
 				$yPrev = $loc_ref->{$key}[$i - 1] if $i >= 1;
 
-				my $new = defined($yPrev) ? $y - $yPrev : '';
+				my $newOrEmpty = (defined($y) && defined($yPrev)) ? $y - $yPrev : '';
+				my $yOrEmpty = $y // '';
 
-				push(@newValues, $new);
-				push(@yValues, $y);
+				push(@newValues, $newOrEmpty);
+				push(@yValues, $yOrEmpty);
 			}
 
 			print(join($delim, $x, '"'.$location.'"', @newValues, @yValues) . "\n");
