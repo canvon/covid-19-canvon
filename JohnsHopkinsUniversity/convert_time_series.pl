@@ -3,6 +3,9 @@
 use strict;
 use warnings;
 
+# Enable UTF-8 mode.
+use open qw(:locale);
+
 use DateTime;
 
 # Input:  Province/State,Country/Region,Lat,Long,1/22/20,1/23/20,1/24/20,...
