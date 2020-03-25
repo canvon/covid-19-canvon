@@ -107,6 +107,10 @@ for (
 		  if $region =~ /"/;
 
 
+		# Overrides, to re-gain overal data consistency.
+		$region =~ s/^Mainland (China)$/$1/;
+
+
 		my $key = $region . $delim . $state;
 
 		$locations{$key} = [] unless defined($locations{$key});
