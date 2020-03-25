@@ -1,6 +1,9 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
   call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
 }
+if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
+  call "examples/owid.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+}
 
 set logscale y
 set title "Total confirmed deaths in logarithmic scale"
