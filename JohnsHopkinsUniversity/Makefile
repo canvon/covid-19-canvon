@@ -22,14 +22,17 @@ git-pull: COVID-19
 	cd COVID-19 && git pull --ff-only
 
 DAILY_REPORT_DIR = COVID-19/csse_covid_19_data/csse_covid_19_daily_reports
-DAILY_REPORT_FILES = $(wildcard "$(DAILY_REPORT_DIR)/"*.csv)
+DAILY_REPORT_FILES = $(wildcard $(DAILY_REPORT_DIR)/*.csv)
 
 time_series_covid19_generated_recovered_global.csv: $(DAILY_REPORT_FILES) generate_time_series.pl
 	TZ=UTC ./generate_time_series.pl "$(DAILY_REPORT_DIR)" >"$@"
 	mkdir -pv "archive/generated_data"
 	cp -avi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
-TIMESERIES_FILES = $(wildcard COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_*_global.csv) time_series_covid19_generated_recovered_global.csv
+# (As of 2020-03-25/-26, JHU is seemingly providing a "recovered" time series
+# again, but it does not seem to be updated with the other files... Keep
+# generating our own, instead, at least for now! => Filter it out.)
+TIMESERIES_FILES = $(filter-out %/time_series_covid19_recovered_global.csv,$(wildcard COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_*_global.csv)) time_series_covid19_generated_recovered_global.csv
 
 full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 	./convert_time_series.pl $(TIMESERIES_FILES) >"$@"
