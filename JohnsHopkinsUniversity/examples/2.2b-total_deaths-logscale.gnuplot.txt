@@ -1,0 +1,10 @@
+if (!exists("CommonLoaded") || CommonLoaded == 0) {
+  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3
+}
+if (!exists("JHULoaded") || JHULoaded == 0) {
+  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  set title "Total deaths (logarithmic scale)"
+}
+
+set logscale y
+call "examples/2.2-total_deaths.gnuplot.txt" ARG1 ARG2 ARG3
