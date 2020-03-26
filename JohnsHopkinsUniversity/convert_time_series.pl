@@ -54,6 +54,10 @@ sub loadData($)
 		$region =~ s/^"(.*)"$/$1/;  # Un-quote, the more-probably-not-needed-here way. ...
 		print STDERR "Problem region: $region\n" if $region =~ /"/;
 
+		# Overrides.
+		$region =~ s/^US$/United States/;  # (All cases are "wrong" (w.r.t. OWID/ECDC).)
+		$region =~ s/^UK$/United Kingdom/;  # (Some minor cases (with data of up to "18") "wrong".)
+
 		# Interpret empty values as undef. Important for avoiding warnings, later!
 		for my $data_point (@data_points) {
 			$data_point = undef if $data_point eq '';
