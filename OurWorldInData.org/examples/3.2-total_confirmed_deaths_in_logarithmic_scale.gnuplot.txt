@@ -7,4 +7,4 @@ if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
 
 set logscale y
 set title "Total confirmed deaths in logarithmic scale"
-plot for [Location in "World China Japan Germany Italy France International"] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation(Location, column("totalDeaths"))) title Location with lines
+plot for [Location in "World China Japan Germany Italy France International"] DataFile using (TC(0)):(SelectLocation(Location, column("totalDeaths"))) title Location with lines
