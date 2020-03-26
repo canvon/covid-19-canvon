@@ -3,6 +3,7 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 }
 if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
   call "examples/owid.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  set title "Gesamtzahl Fälle: Welt gegenüber Deutschland"
 }
 
 plot DataFile using (TC(0)):(SelectLocation("World", column("totalCases"))) title "Welt" with lines, \

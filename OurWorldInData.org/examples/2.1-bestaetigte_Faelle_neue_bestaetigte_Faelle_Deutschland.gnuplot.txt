@@ -3,9 +3,10 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 }
 if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
   call "examples/owid.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  set title "Bestätigte gegenüber neuen Fällen Deutschland"
 }
 
 set ytics nomirror
 set y2tics
-plot DataFile using (TC(0)):(SelectLocation("Germany", column("totalCases"))) title "bestaetigte Faelle Deutschland" with lines, \
-	'' using (TC(0)):(SelectLocation("Germany", column("newCases"))) axis x1y2 title "neue bestaetigte Faelle Deutschland" with lines
+plot DataFile using (TC(0)):(SelectLocation("Germany", column("totalCases"))) title "bestätigte Fälle Deutschland" with lines, \
+	'' using (TC(0)):(SelectLocation("Germany", column("newCases"))) axis x1y2 title "neue bestätigte Fälle Deutschland" with lines
