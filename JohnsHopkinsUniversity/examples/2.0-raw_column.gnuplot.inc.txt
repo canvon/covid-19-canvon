@@ -8,4 +8,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 }
 
 #set title ARG5
-plot for [Location in "World China Japan Germany Italy France"] DataFile using (TC(0)):(SelectLocation(Location, @ARG4)) title Location with lines
+plot for [Location in WorldLocations] DataFile using (TC(0)):(SelectLocation(Location, @ARG4)) title Location with lines
