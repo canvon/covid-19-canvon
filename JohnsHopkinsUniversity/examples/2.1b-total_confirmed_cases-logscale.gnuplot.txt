@@ -1,6 +1,10 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
   call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3
 }
+if (!exists("JHULoaded") || JHULoaded == 0) {
+  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  set title "Total confirmed cases (logarithmic scale)"
+}
 
 set logscale y
-call "examples/2.0-raw_column.gnuplot.inc.txt" ARG1 ARG2 ARG3 "column(\"totalConfirmed\")" "Total confirmed cases in logarithmic scale"
+call "examples/2.1-total_confirmed_cases.gnuplot.txt" ARG1 ARG2 ARG3

@@ -1,6 +1,9 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
   call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
 }
+if (!exists("JHULoaded") || JHULoaded == 0) {
+  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  set title "Currently active cases"
+}
 
-set title "Currently active cases (data from Johns Hopkins University)"
-plot for [Location in "World China Japan Germany Italy France"] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title Location with lines
+plot for [Location in "World China Japan Germany Italy France"] DataFile using (TC(0)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title Location with lines

@@ -3,7 +3,12 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
   call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
 }
+if (!exists("JHULoaded") || JHULoaded == 0) {
+  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  set title "Bestätigte gegenüber neuen Fällen Deutschland (Zoom)"
+}
 
 set ytics nomirror
 set y2tics
-plot ["2020-02-27":] 'full_data_for_gnuplot.csv' using (TC(0)):(SelectLocation("Germany", column("totalConfirmed"))) title "bestaetigte Faelle Deutschland" with lines, '' using (TC(0)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "neue bestaetigte Faelle Deutschland" with lines
+plot ["2020-02-27":] DataFile using (TC(0)):(SelectLocation("Germany", column("totalConfirmed"))) title "bestätigte Fälle Deutschland" with lines, \
+	'' using (TC(0)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "neue bestätigte Fälle Deutschland" with lines
