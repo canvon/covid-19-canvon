@@ -31,7 +31,7 @@ TC(Dummy) = timecolumn(1,"%s")
 SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
 
 # Selection of locations to plot on world comparison charts.
-WorldLocations = "World China Japan Germany Italy France"
+WorldLocations = "World China Japan Germany Italy France Spain 'United Kingdom' 'United States'"
 
 # A chance to do anything else that might be needed.
 @ARG3
