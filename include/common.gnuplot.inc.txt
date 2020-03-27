@@ -19,7 +19,9 @@ if (TermOut ne "") {
 # General preparation for our data environment.
 set datafile separator comma
 set timefmt      "%Y-%m-%d"  # Reading, e.g., from plot range strings.
-set xtics format "%Y-%m-%d"  # Writing to output.
+#set xtics format "%Y-%m-%d"  # Writing to output.
+set xtics format "%b %d"     # "Mar 26", to save room against "2020-03-26".
+                             # Besides, the 2020 is redundant, most of the time.
 set xdata time
 
 # Switch from key at the upper-right to upper-left,
