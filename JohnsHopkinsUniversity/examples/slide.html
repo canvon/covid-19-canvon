@@ -31,21 +31,15 @@
       <div id="plotsCarousel" class="carousel slide" data-wrap="false" data-interval="0" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <h5>Plot from file <code>covid19-jhu-20200327-1.0-confirmed_cases_germany-zoom.png</code>:
-              (<a href="#slideIndex=0">Link</a>)
-            </h5>
+            <h5>Plot from file <code>covid19-jhu-20200327-1.0-confirmed_cases_germany-zoom.png</code>:</h5>
             <img src="covid19-jhu-20200327-1.0-confirmed_cases_germany-zoom.png" class="d-block w-100">
           </div>
           <div class="carousel-item">
-            <h5>Plot from file <code>covid19-jhu-20200327-2.1-total_confirmed_cases.png</code>:
-              (<a href="#slideIndex=1">Link</a>)
-            </h5>
+            <h5>Plot from file <code>covid19-jhu-20200327-2.1-total_confirmed_cases.png</code>:</h5>
             <img src="covid19-jhu-20200327-2.1-total_confirmed_cases.png" class="d-block w-100">
           </div>
           <div class="carousel-item">
-            <h5>Plot from file <code>covid19-jhu-20200327-2.1b-total_confirmed_cases-logscale.png</code>:
-              (<a href="#slideIndex=2">Link</a>)
-            </h5>
+            <h5>Plot from file <code>covid19-jhu-20200327-2.1b-total_confirmed_cases-logscale.png</code>:</h5>
             <img src="covid19-jhu-20200327-2.1b-total_confirmed_cases-logscale.png" class="d-block w-100">
           </div>
         </div>
@@ -128,9 +122,24 @@
         }
       }
 
+      function updateFragment(slideIndex) {
+        var hash = document.location.hash
+        if (hash.length == 0 || hash === '#' || hash === '#plotsCarousel' || hash.startsWith('#slideIndex=')) {
+          document.location.hash = '#slideIndex=' + slideIndex.toString()
+        }
+      }
+
+
+      // Wire events.
+
       $(document).ready(function() {
         runFragment(document.location.hash)
       })
+
+      $('#plotsCarousel').on('slide.bs.carousel', function (e) {
+        updateFragment(e.to)
+      })
+
     </script>
   </body>
 </html>
