@@ -87,17 +87,43 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script>
-      $(document).ready(function() {
-        var hash = document.location.hash
-        if (hash.length > 0) {
-          var slideStr = hash.substr(1)
-          if (slideStr.length > 0) {
-            var slide = parseInt(slideStr)
-            if (!isNaN(slide)) {
-              $('#plotsCarousel').carousel(slide)
-            }
-          }
+      function runFragmentSlide(args) {
+        if (args.length != 2) {
+          return
         }
+        var slideStr = args[1]
+        if (!(slideStr.length > 0)) {
+          return
+        }
+
+        var slide = parseInt(slideStr)
+        if (isNaN(slide)) {
+          return
+        }
+
+        // Actually run slide.
+        $('#plotsCarousel').carousel(slide)
+      }
+
+      function runFragment(hash) {
+        if (hash.length == 0) {
+          return
+        }
+        var frag = hash.substr(1)
+
+        var args = frag.split('=', 2)
+        if (args.length != 2) {
+          return
+        }
+
+        var what = args[0]
+        if (what === 'slide') {
+          runFragmentSlide(args)
+        }
+      }
+
+      $(document).ready(function() {
+        runFragment(document.location.hash)
       })
     </script>
   </body>
