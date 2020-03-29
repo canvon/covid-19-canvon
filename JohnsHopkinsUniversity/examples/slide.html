@@ -123,9 +123,11 @@
       }
 
       function updateFragment(slideIndex) {
-        var hash = document.location.hash
+        // Note: document.location (is supposed to be read-only and)
+        //   breaks on Firefox mobile... window.location seems to work.
+        var hash = window.location.hash
         if (hash.length == 0 || hash === '#' || hash === '#plotsCarousel' || hash.startsWith('#slideIndex=')) {
-          document.location.hash = '#slideIndex=' + slideIndex.toString()
+          window.location.hash = '#slideIndex=' + slideIndex.toString()
         }
       }
 
@@ -133,7 +135,7 @@
       // Wire events.
 
       $(document).ready(function() {
-        runFragment(document.location.hash)
+        runFragment(window.location.hash)
       })
 
       $('#plotsCarousel').on('slide.bs.carousel', function (e) {
