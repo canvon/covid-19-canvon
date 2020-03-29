@@ -3,6 +3,7 @@
 
 # Generated.
 /time_series_covid19_generated_*.csv
+/examples/slide-templated-demo.html
 
 # Your personal archive; should not be committed to git.
 # Copies of source data files, and generated plot image files,

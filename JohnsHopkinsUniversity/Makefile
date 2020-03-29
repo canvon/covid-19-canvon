@@ -50,3 +50,8 @@ plot-examples: full_data_for_gnuplot.csv
 	    echo "Plotting $$I ..."; \
 	    gnuplot -c "$$I" png "archive/plots/$(TIMESTAMP)/covid19-jhu-$${SOURCEDATA_TIMESTAMP}-$$(basename "$$I" .gnuplot.txt).png" || exit; \
 	  done
+
+examples/slide-templated-demo.html: examples/slide-templated-demo.html.tt2 examples/slide-templated.html.tt2
+	# Perl Template::Toolkit (TT2)
+	@#tpage $+ >"$@"
+	tpage "$<" >"$@"

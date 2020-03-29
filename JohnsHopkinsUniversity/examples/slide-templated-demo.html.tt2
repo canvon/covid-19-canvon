@@ -1,0 +1,14 @@
+[%
+  data_source = 'Johns Hopkins University'
+  data_source_short = 'JHU'
+  data_date = '20200327'
+  plot_run = '20200328_140000'
+  plot_prefix = 'covid19-' _ data_source_short.lower _ '-' _ data_date _ '-'
+  plot_suffix = '.png'
+  plot_basenames = [
+    '1.0-confirmed_cases_germany-zoom',
+    '2.1-total_confirmed_cases',
+    '2.1b-total_confirmed_cases-logscale',
+  ]
+-%]
+[% INCLUDE 'examples/slide-templated.html.tt2' -%]
