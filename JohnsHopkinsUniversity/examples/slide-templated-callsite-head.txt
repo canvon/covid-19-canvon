@@ -1,0 +1,4 @@
+[%
+  data_source = 'Johns Hopkins University'
+  data_source_short = 'JHU'
+
