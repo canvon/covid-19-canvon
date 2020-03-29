@@ -76,7 +76,7 @@ plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALL
 	  ) >>"$${TARGET_SLIDE_TT2}" && \
 	  echo && \
 	  if ! which tpage >/dev/null; then \
-	    echo "Can't generate slide HTML: Perl Template::Toolkit (TT2)'s command tpage not found"; \
+	    echo "Can't generate slide HTML: Perl Template::Toolkit (TT2)'s command tpage not found" >&2; \
 	  else \
 	    echo "Generating slide HTML..." && \
 	    tpage "$${TARGET_SLIDE_TT2}" >"$${TARGET_SLIDE}" || exit; \
