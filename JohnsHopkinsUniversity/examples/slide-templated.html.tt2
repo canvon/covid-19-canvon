@@ -88,9 +88,28 @@
         }
 
         var slide = parseInt(slideStr)
-        if (isNaN(slide)) {
+        if (isNaN(slide) || !(slide >= 0)) {
           return
         }
+
+        // Actually run slide.
+        $('#plotsCarousel').carousel(slide)
+      }
+
+      function runFragmentSlideNum(args) {
+        if (args.length != 2) {
+          return
+        }
+        var slideNumStr = args[1]
+        if (!(slideNumStr.length > 0)) {
+          return
+        }
+
+        var slideNum = parseInt(slideNumStr)
+        if (isNaN(slideNum) || !(slideNum >= 1)) {
+          return
+        }
+        var slide = slideNum - 1
 
         // Actually run slide.
         $('#plotsCarousel').carousel(slide)
@@ -111,14 +130,24 @@
         if (what === 'slideIndex') {
           runFragmentSlideIndex(args)
         }
+        else if (what === 'slideNum') {
+          runFragmentSlideNum(args)
+        }
       }
 
       function updateFragment(slideIndex) {
         // Note: document.location (is supposed to be read-only and)
         //   breaks on Firefox mobile... window.location seems to work.
         var hash = window.location.hash
-        if (hash.length == 0 || hash === '#' || hash === '#plotsCarousel' || hash.startsWith('#slideIndex=')) {
-          window.location.hash = '#slideIndex=' + slideIndex.toString()
+        if (hash.length == 0 ||
+            hash === '#' ||
+            hash === '#plotsCarousel' ||
+            hash.startsWith('#slideIndex=') ||
+            hash.startsWith('#slideNum='))
+        {
+          //window.location.hash = '#slideIndex=' + slideIndex.toString()
+          var slideNum = slideIndex + 1
+          window.location.hash = '#slideNum=' + slideNum.toString()
         }
       }
 
