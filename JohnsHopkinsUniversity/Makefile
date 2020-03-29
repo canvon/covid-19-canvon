@@ -66,8 +66,9 @@ plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALL
 	  ) >"$${TARGET_SLIDE_TT2}" && \
 	  for I in examples/[1-9]*.gnuplot.txt; do \
 	    echo "Plotting $$I ..."; \
-	    gnuplot -c "$$I" png "$${TARGET_DIR}/$${TARGET_PREFIX}$$(basename "$$I" .gnuplot.txt)$${TARGET_SUFFIX}" || exit; \
-	    echo "    '$$I'," >>"$${TARGET_SLIDE_TT2}"; \
+	    TARGET_BASENAME="$$(basename "$$I" .gnuplot.txt)" && \
+	    gnuplot -c "$$I" png "$${TARGET_DIR}/$${TARGET_PREFIX}$${TARGET_BASENAME}$${TARGET_SUFFIX}" || exit; \
+	    echo "    '$${TARGET_BASENAME}'," >>"$${TARGET_SLIDE_TT2}"; \
 	  done && \
 	  ( \
 	    echo "  ]" && \
