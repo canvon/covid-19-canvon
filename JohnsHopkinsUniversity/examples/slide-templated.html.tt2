@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+[% BLOCK set_plot_filename; plot_filename = plot_prefix _ plot_basename _ plot_suffix; END -%]
+  <!-- Based on the "Starter template" from https://getbootstrap.com/docs/4.4/getting-started/introduction/ -->
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style>
+      /* Make control arrows black, or "visible on white-background image".
+       * Thanks to: https://stackoverflow.com/questions/46249541/change-arrow-colors-in-bootstraps-carousel#answer-53359424
+       */
+      .carousel-control-prev,
+      .carousel-control-next {
+        filter: invert(100%);
+      }
+    </style>
+
+    <title>[% data_source_short %] [% data_date %] - Covid-19 (Corona Virus Disease started 2019) canvon rendering</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Covid-19 (Corona Virus Disease started 2019) canvon rendering</h1>
+      <h2>Plots based on data from [% data_source %], plot run [% plot_run %] for data from [% data_date %]</h2>
+
+      <div class="row"><div class="col border border-light rounded bg-light p-3">
+
+      <div id="plotsCarousel" class="carousel slide" data-interval="0" data-ride="carousel">
+        <div class="carousel-inner">
+[% FOREACH plot_basename = plot_basenames -%]
+[% PROCESS set_plot_filename -%]
+          <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
+            <h5>Plot from file <code>[% plot_filename %]</code>: ([% loop.count %]/[% loop.size %])</h5>
+            <img src="[% plot_filename %]" class="d-block w-100">
+          </div>
+[% END -%]
+        </div>
+
+        <a class="carousel-control-prev" href="#plotsCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#plotsCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      </div></div>
+
+      <div class="row mt-3">
+        <div class="col border border-light rounded bg-light p-3">
+
+          <h5>Jump to a plot directly:</h5>
+          <ul>
+[% FOREACH plot_basename = plot_basenames -%]
+[% PROCESS set_plot_filename -%]
+            <li>
+              <a href="#plotsCarousel" role="button" data-slide-to="[% loop.index %]">[% plot_basename %]</a>
+              (<a href="[% plot_filename %]">file</a>)
+            </li>
+[% END -%]
+          </ul>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script>
+      function runFragmentSlideIndex(args) {
+        if (args.length != 2) {
+          return
+        }
+        var slideStr = args[1]
+        if (!(slideStr.length > 0)) {
+          return
+        }
+
+        var slide = parseInt(slideStr)
+        if (isNaN(slide) || !(slide >= 0)) {
+          return
+        }
+
+        // Actually run slide.
+        $('#plotsCarousel').carousel(slide)
+      }
+
+      function runFragmentSlideNum(args) {
+        if (args.length != 2) {
+          return
+        }
+        var slideNumStr = args[1]
+        if (!(slideNumStr.length > 0)) {
+          return
+        }
+
+        var slideNum = parseInt(slideNumStr)
+        if (isNaN(slideNum) || !(slideNum >= 1)) {
+          return
+        }
+        var slide = slideNum - 1
+
+        // Actually run slide.
+        $('#plotsCarousel').carousel(slide)
+      }
+
+      function runFragment(hash) {
+        if (hash.length == 0) {
+          return
+        }
+        var frag = hash.substr(1)
+
+        var args = frag.split('=', 2)
+        if (args.length != 2) {
+          return
+        }
+
+        var what = args[0]
+        if (what === 'slideIndex') {
+          runFragmentSlideIndex(args)
+        }
+        else if (what === 'slideNum') {
+          runFragmentSlideNum(args)
+        }
+      }
+
+      function updateFragment(slideIndex) {
+        // Note: document.location (is supposed to be read-only and)
+        //   breaks on Firefox mobile... window.location seems to work.
+        var hash = window.location.hash
+        if (hash.length == 0 ||
+            hash === '#' ||
+            hash === '#plotsCarousel' ||
+            hash.startsWith('#slideIndex=') ||
+            hash.startsWith('#slideNum='))
+        {
+          //window.location.hash = '#slideIndex=' + slideIndex.toString()
+          var slideNum = slideIndex + 1
+          window.location.hash = '#slideNum=' + slideNum.toString()
+        }
+      }
+
+
+      // Wire events.
+
+      $(document).ready(function() {
+        runFragment(window.location.hash)
+      })
+
+      $('#plotsCarousel').on('slide.bs.carousel', function (e) {
+        updateFragment(e.to)
+      })
+
+    </script>
+  </body>
+</html>

@@ -42,11 +42,47 @@ full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 
 .PHONY: plot-examples
 
-plot-examples: full_data_for_gnuplot.csv
+SLIDE_TEMPLATE = examples/slide-templated.html.tt2
+SLIDE_TEMPLATE_CALLSITE_HEAD = examples/slide-templated-callsite-head.txt
+SLIDE_TEMPLATE_CALLSITE_TAIL = examples/slide-templated-callsite-tail.txt
+
+plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	mkdir -pv "archive/plots"
 	mkdir -v "archive/plots/$(TIMESTAMP)"  # It is an error if directory already existed...
-	@SOURCEDATA_TIMESTAMP=$$(TZ=UTC date --date=@$$(grep World full_data_for_gnuplot.csv | tail -1 | cut -d, -f1) '+%Y%m%d') && \
+	@echo && \
+	  SOURCEDATA_TIMESTAMP=$$(TZ=UTC date --date=@$$(grep World full_data_for_gnuplot.csv | tail -1 | cut -d, -f1) '+%Y%m%d') && \
+	  TARGET_DIR="archive/plots/$(TIMESTAMP)" && \
+	  TARGET_PREFIX="covid19-jhu-$${SOURCEDATA_TIMESTAMP}-" && \
+	  TARGET_SUFFIX=".png" && \
+	  TARGET_SLIDE="$${TARGET_DIR}/slide.html" && \
+	  TARGET_SLIDE_TT2="$${TARGET_SLIDE}.tt2" && \
+	  ( \
+	    cat "$(SLIDE_TEMPLATE_CALLSITE_HEAD)" && \
+	    echo "  data_date = '$${SOURCEDATA_TIMESTAMP}'" && \
+	    echo "  plot_run = '$(TIMESTAMP)'" && \
+	    echo "  plot_prefix = '$${TARGET_PREFIX}'" && \
+	    echo "  plot_suffix = '$${TARGET_SUFFIX}'" && \
+	    echo "  plot_basenames = [" \
+	  ) >"$${TARGET_SLIDE_TT2}" && \
 	  for I in examples/[1-9]*.gnuplot.txt; do \
 	    echo "Plotting $$I ..."; \
-	    gnuplot -c "$$I" png "archive/plots/$(TIMESTAMP)/covid19-jhu-$${SOURCEDATA_TIMESTAMP}-$$(basename "$$I" .gnuplot.txt).png" || exit; \
-	  done
+	    TARGET_BASENAME="$$(basename "$$I" .gnuplot.txt)" && \
+	    gnuplot -c "$$I" png "$${TARGET_DIR}/$${TARGET_PREFIX}$${TARGET_BASENAME}$${TARGET_SUFFIX}" || exit; \
+	    echo "    '$${TARGET_BASENAME}'," >>"$${TARGET_SLIDE_TT2}"; \
+	  done && \
+	  ( \
+	    echo "  ]" && \
+	    cat "$(SLIDE_TEMPLATE_CALLSITE_TAIL)" \
+	  ) >>"$${TARGET_SLIDE_TT2}" && \
+	  echo && \
+	  if ! which tpage >/dev/null; then \
+	    echo "Can't generate slide HTML: Perl Template::Toolkit (TT2)'s command tpage not found" >&2; \
+	  else \
+	    echo "Generating slide HTML..." && \
+	    tpage "$${TARGET_SLIDE_TT2}" >"$${TARGET_SLIDE}" || exit; \
+	  fi
+
+examples/slide-templated-demo.html: examples/slide-templated-demo.html.tt2 $(SLIDE_TEMPLATE)
+	# Perl Template::Toolkit (TT2)
+	@#tpage $+ >"$@"
+	tpage "$<" >"$@"
