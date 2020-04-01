@@ -145,9 +145,14 @@
             hash.startsWith('#slideIndex=') ||
             hash.startsWith('#slideNum='))
         {
-          //window.location.hash = '#slideIndex=' + slideIndex.toString()
+          // (Stop using slideIndex, in favour of slideNum.)
+          //var updatedHash = '#slideIndex=' + slideIndex.toString()
           var slideNum = slideIndex + 1
-          window.location.hash = '#slideNum=' + slideNum.toString()
+          var updatedHash = '#slideNum=' + slideNum.toString()
+
+          // (Stop using Location.hash, as that bloats the back button history...)
+          //window.location.hash = updatedHash
+          window.location.replace(updatedHash)
         }
       }
 
