@@ -84,6 +84,18 @@
         </div>
       </div>
 
+      <div class="row mt-3">
+        <div class="col border border-light rounded bg-light p-3">
+
+          <h5>Jump to elsewhere:</h5>
+          <ul>
+            <li><a href="..">Parent directory</a></li>
+            <li><a href="/">Top of the site</a></li>
+          </ul>
+
+        </div>
+      </div>
+
     </div>
 
     <!-- Optional JavaScript -->
