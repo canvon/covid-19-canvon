@@ -3,6 +3,7 @@
 
 # Generated.
 /time_series_covid19_generated_*.csv
+/examples/*.png
 /examples/slide-templated-demo.html
 
 # Your personal archive; should not be committed to git.
