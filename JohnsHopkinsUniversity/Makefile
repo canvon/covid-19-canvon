@@ -82,8 +82,8 @@ plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALL
 	    tpage "$${TARGET_SLIDE_TT2}" >"$${TARGET_SLIDE}" || exit; \
 	  fi
 
-GNUPLOT_INCS = $(wildcard examples/*.gnuplot.inc.txt ../include/*.gnuplot.inc.txt)
-GNUPLOT_SRCS = $(wildcard examples/*.gnuplot.txt)
+GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt ../include/*.gnuplot.inc.txt))
+GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot.txt))
 GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
 
 plot-examples-inplace: $(GNUPLOT_PNGS)
