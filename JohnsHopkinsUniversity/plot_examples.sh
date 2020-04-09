@@ -25,6 +25,8 @@ usage() {
 INFIX="$1"; shift
 CSV="$1"; shift
 
+[ -f "$CSV" ] || die "Plot data CSV \"$CSV\" not found"
+
 SOURCEDATA_TIMESTAMP=$(
     TZ=UTC date --date=@"$(grep World full_data_for_gnuplot.csv | tail -1 | cut -d, -f1)" '+%Y%m%d'
   ) || die "Failed to determine source data timestamp"
