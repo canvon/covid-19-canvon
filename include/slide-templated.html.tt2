@@ -53,14 +53,14 @@
 [% IF data_source_linking.defined -%]
 
           <div class="pt-3">
-            <p>Public data from [% data_source | html %] collected from: <a href="[% data_source_linking | url %]">[% data_source_linking | html %]</a></p>
+            Public data from [% data_source | html %] collected from: <a href="[% data_source_linking | url %]">[% data_source_linking | html %]</a>
           </div>
 [% END -%]
 [% IF !canvon_rendering_linking.defined; canvon_rendering_linking = 'https://github.com/canvon/covid-19-canvon'; END -%]
 [% IF canvon_rendering_linking -%]
 
           <div class="pt-3">
-            <p>canvon rendering from: <a href="[% canvon_rendering_linking | url %]">[% canvon_rendering_linking | html %]</a></p>
+            canvon rendering from: <a href="[% canvon_rendering_linking | url %]">[% canvon_rendering_linking | html %]</a>
           </div>
 [% END -%]
 
