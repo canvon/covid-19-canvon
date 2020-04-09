@@ -40,7 +40,7 @@ full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 	cp -avi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
 
-.PHONY: plot-examples
+.PHONY: plot-examples clean-examples-inplace plot-examples-inplace
 
 SLIDE_TEMPLATE = examples/slide-templated.html.tt2
 SLIDE_TEMPLATE_CALLSITE_HEAD = examples/slide-templated-callsite-head.txt
