@@ -1,4 +1,5 @@
 [%
   data_source = 'Johns Hopkins University'
   data_source_short = 'JHU'
+  data_source_linking = 'https://github.com/CSSEGISandData/COVID-19'
 

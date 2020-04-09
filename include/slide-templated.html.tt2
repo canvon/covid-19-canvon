@@ -50,6 +50,12 @@
               <span class="sr-only">Next</span>
             </a>
           </div>
+[% IF data_source_linking.defined -%]
+
+          <div>
+            <p>Public data from [% data_source | html %] collected from: <a href="[% data_source_linking | url %]">[% data_source_linking | html %]</a></p>
+          </div>
+[% END -%]
 
         </div>
       </div>
