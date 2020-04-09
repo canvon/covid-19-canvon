@@ -24,13 +24,24 @@ full_data_for_gnuplot.csv: full_data.csv convert_full_data.pl
 	cp -avi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
 
-.PHONY: plot-examples
+.PHONY: plot-examples clean-examples-inplace plot-examples-inplace
 
-plot-examples: full_data.csv full_data_for_gnuplot.csv
-	mkdir -pv "archive/plots"
-	mkdir -v "archive/plots/$(TIMESTAMP)"  # It is an error if directory already existed...
-	@SOURCEDATA_TIMESTAMP=$$(date --date=$$(grep World full_data.csv | tail -1 | cut -d, -f1) '+%Y%m%d') && \
-	  for I in examples/[1-9]*.gnuplot.txt; do \
-	    echo "Plotting $$I ..."; \
-	    gnuplot -c "$$I" png "archive/plots/$(TIMESTAMP)/covid19-owid-$${SOURCEDATA_TIMESTAMP}-$$(basename "$$I" .gnuplot.txt).png" || exit; \
-	  done
+export SLIDE_TEMPLATE := ../include/slide-templated.html.tt2
+export SLIDE_TEMPLATE_CALLSITE_HEAD := examples/slide-templated-callsite-head.txt
+export SLIDE_TEMPLATE_CALLSITE_TAIL := examples/slide-templated-callsite-tail.txt
+
+GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt ../include/*.gnuplot.inc.txt))
+GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot.txt))
+GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
+
+plot-examples: full_data_for_gnuplot.csv full_data.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
+	# Uses TIMESTAMP, SLIDE_*.
+	../include/plot_examples.sh owid "$<" $(GNUPLOT_SRCS)
+
+clean-examples-inplace:
+	-rm -f $(GNUPLOT_PNGS)
+
+plot-examples-inplace: $(GNUPLOT_PNGS)
+
+examples/%.png: examples/%.gnuplot.txt $(GNUPLOT_INCS) full_data_for_gnuplot.csv full_data.csv
+	gnuplot -c "$<" png "$@"

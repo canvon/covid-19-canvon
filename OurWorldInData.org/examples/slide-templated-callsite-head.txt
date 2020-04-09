@@ -1,0 +1,4 @@
+[%
+  data_source = 'OurWorldInData.org / ECDC (European Centre for Disease Prevention and Control)'
+  data_source_short = 'OWID/ECDC'
+
