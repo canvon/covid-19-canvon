@@ -86,6 +86,9 @@ GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt ../include/*.gnuplot
 GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot.txt))
 GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
 
+clean-examples-inplace:
+	-rm -f $(GNUPLOT_PNGS)
+
 plot-examples-inplace: $(GNUPLOT_PNGS)
 
 examples/%.png: examples/%.gnuplot.txt $(GNUPLOT_INCS) full_data_for_gnuplot.csv
