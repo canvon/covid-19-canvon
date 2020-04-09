@@ -42,49 +42,17 @@ full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 
 .PHONY: plot-examples clean-examples-inplace plot-examples-inplace
 
-SLIDE_TEMPLATE = examples/slide-templated.html.tt2
-SLIDE_TEMPLATE_CALLSITE_HEAD = examples/slide-templated-callsite-head.txt
-SLIDE_TEMPLATE_CALLSITE_TAIL = examples/slide-templated-callsite-tail.txt
-
-plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
-	mkdir -pv "archive/plots"
-	mkdir -v "archive/plots/$(TIMESTAMP)"  # It is an error if directory already existed...
-	@echo && \
-	  SOURCEDATA_TIMESTAMP=$$(TZ=UTC date --date=@$$(grep World full_data_for_gnuplot.csv | tail -1 | cut -d, -f1) '+%Y%m%d') && \
-	  TARGET_DIR="archive/plots/$(TIMESTAMP)" && \
-	  TARGET_PREFIX="covid19-jhu-$${SOURCEDATA_TIMESTAMP}-" && \
-	  TARGET_SUFFIX=".png" && \
-	  TARGET_SLIDE="$${TARGET_DIR}/slide.html" && \
-	  TARGET_SLIDE_TT2="$${TARGET_SLIDE}.tt2" && \
-	  ( \
-	    cat "$(SLIDE_TEMPLATE_CALLSITE_HEAD)" && \
-	    echo "  data_date = '$${SOURCEDATA_TIMESTAMP}'" && \
-	    echo "  plot_run = '$(TIMESTAMP)'" && \
-	    echo "  plot_prefix = '$${TARGET_PREFIX}'" && \
-	    echo "  plot_suffix = '$${TARGET_SUFFIX}'" && \
-	    echo "  plot_basenames = [" \
-	  ) >"$${TARGET_SLIDE_TT2}" && \
-	  for I in examples/[1-9]*.gnuplot.txt; do \
-	    echo "Plotting $$I ..."; \
-	    TARGET_BASENAME="$$(basename "$$I" .gnuplot.txt)" && \
-	    gnuplot -c "$$I" png "$${TARGET_DIR}/$${TARGET_PREFIX}$${TARGET_BASENAME}$${TARGET_SUFFIX}" || exit; \
-	    echo "    '$${TARGET_BASENAME}'," >>"$${TARGET_SLIDE_TT2}"; \
-	  done && \
-	  ( \
-	    echo "  ]" && \
-	    cat "$(SLIDE_TEMPLATE_CALLSITE_TAIL)" \
-	  ) >>"$${TARGET_SLIDE_TT2}" && \
-	  echo && \
-	  if ! which tpage >/dev/null; then \
-	    echo "Can't generate slide HTML: Perl Template::Toolkit (TT2)'s command tpage not found" >&2; \
-	  else \
-	    echo "Generating slide HTML..." && \
-	    tpage "$${TARGET_SLIDE_TT2}" >"$${TARGET_SLIDE}" || exit; \
-	  fi
+export SLIDE_TEMPLATE := examples/slide-templated.html.tt2
+export SLIDE_TEMPLATE_CALLSITE_HEAD := examples/slide-templated-callsite-head.txt
+export SLIDE_TEMPLATE_CALLSITE_TAIL := examples/slide-templated-callsite-tail.txt
 
 GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt ../include/*.gnuplot.inc.txt))
 GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot.txt))
 GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
+
+plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
+	# Uses TIMESTAMP, SLIDE_*.
+	./plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
 
 clean-examples-inplace:
 	-rm -f $(GNUPLOT_PNGS)
