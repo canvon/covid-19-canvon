@@ -75,7 +75,7 @@
 [% FOREACH plot_basename = plot_basenames -%]
 [% PROCESS set_plot_filename -%]
             <li>
-              <a href="#plotsCarousel" role="button" data-slide-to="[% loop.index %]">[% plot_basename %]</a>
+              <a href="#plotsCarousel" role="button" data-slide-to="[% loop.index %]">[% plot_basename | replace('_', ' ') | replace('-', ' - ') %]</a>
               (<a href="[% plot_filename %]">file</a>)
             </li>
 [% END -%]
