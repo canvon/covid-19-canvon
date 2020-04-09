@@ -42,7 +42,7 @@ full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 
 .PHONY: plot-examples clean-examples-inplace plot-examples-inplace
 
-export SLIDE_TEMPLATE := examples/slide-templated.html.tt2
+export SLIDE_TEMPLATE := ../include/slide-templated.html.tt2
 export SLIDE_TEMPLATE_CALLSITE_HEAD := examples/slide-templated-callsite-head.txt
 export SLIDE_TEMPLATE_CALLSITE_TAIL := examples/slide-templated-callsite-tail.txt
 
