@@ -52,7 +52,7 @@ GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
 
 plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	# Uses TIMESTAMP, SLIDE_*.
-	./plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
+	../include/plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
 
 clean-examples-inplace:
 	-rm -f $(GNUPLOT_PNGS)
