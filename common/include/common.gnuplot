@@ -26,6 +26,12 @@ set xdata time
 set xtics 7*24*60*60
 set mxtics 7
 
+# Have a grid. Default + one line for every day. Should help enormously
+# reading data points out of the plots; but will make them a little harder
+# to look at quantitatively(?), I think... Let's do it, though.
+set grid
+set grid mxtics
+
 # Switch from key at the upper-right to upper-left,
 # as the plots will usually end right there. ...
 set key left
