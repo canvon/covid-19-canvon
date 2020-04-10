@@ -21,6 +21,7 @@ usage() {
 [ -n "${SLIDE_TEMPLATE}" ] || usage
 [ -n "${SLIDE_TEMPLATE_CALLSITE_HEAD}" ] || usage
 [ -n "${SLIDE_TEMPLATE_CALLSITE_TAIL}" ] || usage
+[ -n "$C19C_GNUPLOT_TERMINAL" ] || usage
 
 INFIX="$1"; shift
 CSV="$1"; shift
@@ -64,7 +65,7 @@ do
   TARGET_BASENAME="$(basename "$I" .gnuplot)" || die "Extracting basename failed with exit code $?"
   TARGET_FILE="${TARGET_DIR}/${TARGET_PREFIX}${TARGET_BASENAME}${TARGET_SUFFIX}"
   gnuplot \
-    -e "call '../common/include/terminal.gnuplot' 'pngcairo' '${TARGET_FILE}'" \
+    -e "call '../common/include/terminal.gnuplot' '${C19C_GNUPLOT_TERMINAL}' '${TARGET_FILE}'" \
     "$I" \
     || die "gnuplot failed with exit code $?"
   echo "    '${TARGET_BASENAME}'," >>"${TARGET_SLIDE_TT2}" || die "Appending gnuplot result image to slide.html.tt2 failed"

@@ -1,7 +1,8 @@
-export TIMESTAMP := $(shell date +%Y%m%d_%H%M%S)
-
 all:
 	@echo "Available targets are (at least): timestamp update plot-examples"
+
+
+include ../common/include/config.mk
 
 
 .PHONY: timestamp
@@ -35,7 +36,7 @@ GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot))
 GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot=.png)
 
 plot-examples: full_data_for_gnuplot.csv full_data.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
-	# Uses TIMESTAMP, SLIDE_*.
+	# Uses TIMESTAMP, SLIDE_*, C19C_GNUPLOT_TERMINAL.
 	../common/plot_examples.sh owid "$<" $(GNUPLOT_SRCS)
 
 clean-examples-inplace:
@@ -44,4 +45,4 @@ clean-examples-inplace:
 plot-examples-inplace: $(GNUPLOT_PNGS)
 
 examples/%.png: examples/%.gnuplot $(GNUPLOT_INCS) full_data_for_gnuplot.csv full_data.csv
-	gnuplot -e "call '../common/include/terminal.gnuplot' 'pngcairo' '$@'" "$<"
+	gnuplot -e "call '../common/include/terminal.gnuplot' '$(C19C_GNUPLOT_TERMINAL)' '$@'" "$<"
