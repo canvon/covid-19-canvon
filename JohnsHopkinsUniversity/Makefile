@@ -42,17 +42,17 @@ full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 
 .PHONY: plot-examples clean-examples-inplace plot-examples-inplace
 
-export SLIDE_TEMPLATE := ../include/slide-templated.html.tt2
+export SLIDE_TEMPLATE := ../common/include/slide-templated.html.tt2
 export SLIDE_TEMPLATE_CALLSITE_HEAD := examples/slide-templated-callsite-head.txt
 export SLIDE_TEMPLATE_CALLSITE_TAIL := examples/slide-templated-callsite-tail.txt
 
-GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt ../include/*.gnuplot.inc.txt))
+GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt ../common/include/*.gnuplot))
 GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot.txt))
 GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
 
 plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	# Uses TIMESTAMP, SLIDE_*.
-	../include/plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
+	../common/plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
 
 clean-examples-inplace:
 	-rm -f $(GNUPLOT_PNGS)
@@ -60,7 +60,7 @@ clean-examples-inplace:
 plot-examples-inplace: $(GNUPLOT_PNGS)
 
 examples/%.png: examples/%.gnuplot.txt $(GNUPLOT_INCS) full_data_for_gnuplot.csv
-	gnuplot -e "call '../include/terminal.gnuplot' 'png' '$@'" "$<"
+	gnuplot -e "call '../common/include/terminal.gnuplot' 'png' '$@'" "$<"
 
 examples/slide-templated-demo.html: examples/slide-templated-demo.html.tt2 $(SLIDE_TEMPLATE)
 	# Perl Template::Toolkit (TT2)

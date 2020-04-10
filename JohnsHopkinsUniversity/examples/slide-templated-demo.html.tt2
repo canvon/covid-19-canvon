@@ -11,4 +11,4 @@
     '2.1b-total_confirmed_cases-logscale',
   ]
 -%]
-[% INCLUDE '../include/slide-templated.html.tt2' -%]
+[% INCLUDE '../common/include/slide-templated.html.tt2' -%]

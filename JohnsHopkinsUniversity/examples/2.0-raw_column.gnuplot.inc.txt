@@ -1,7 +1,7 @@
 # Based on: ../OurWorldInData.org/examples/3.1-total_confirmed_cases_in_logarithmic_scale.gnuplot.txt
 
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  load '../include/common.gnuplot.inc.txt'
+  load '../common/include/common.gnuplot'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'examples/jhu.gnuplot.inc.txt'

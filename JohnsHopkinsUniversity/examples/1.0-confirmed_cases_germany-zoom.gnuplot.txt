@@ -1,7 +1,7 @@
 # Based on: ../OurWorldInData.org/examples/2.2-bestaetigte_Faelle_neue_bestaetigte_Faelle_Deutschland-zoom.gnuplot.txt
 
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  load '../include/common.gnuplot.inc.txt'
+  load '../common/include/common.gnuplot'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'examples/jhu.gnuplot.inc.txt'
