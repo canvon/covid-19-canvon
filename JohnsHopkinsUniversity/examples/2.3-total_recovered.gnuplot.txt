@@ -6,4 +6,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 }
 
 TitleBase = "Total recovered"
-call 'examples/2.0-raw_column.gnuplot.inc.txt' 'column("totalRecovered")'
+call 'include/plot_raw_column.gnuplot' 'column("totalRecovered")'

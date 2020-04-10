@@ -6,4 +6,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 }
 
 TitleBase = "Total confirmed cases"
-call 'examples/2.0-raw_column.gnuplot.inc.txt' 'column("totalConfirmed")'
+call 'include/plot_raw_column.gnuplot' 'column("totalConfirmed")'

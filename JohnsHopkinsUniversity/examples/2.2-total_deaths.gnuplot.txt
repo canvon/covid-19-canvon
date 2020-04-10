@@ -6,4 +6,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 }
 
 TitleBase = "Total deaths"
-call 'examples/2.0-raw_column.gnuplot.inc.txt' 'column("totalDeaths")'
+call 'include/plot_raw_column.gnuplot' 'column("totalDeaths")'
