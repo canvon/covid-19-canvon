@@ -2,7 +2,7 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
   load '../common/include/common.gnuplot'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
-  load 'examples/jhu.gnuplot.inc.txt'
+  load 'include/jhu.gnuplot'
   set title "Total recovered (logarithmic scale)"
 }
 
