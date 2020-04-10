@@ -44,4 +44,4 @@ clean-examples-inplace:
 plot-examples-inplace: $(GNUPLOT_PNGS)
 
 examples/%.png: examples/%.gnuplot $(GNUPLOT_INCS) full_data_for_gnuplot.csv full_data.csv
-	gnuplot -e "call '../common/include/terminal.gnuplot' 'png' '$@'" "$<"
+	gnuplot -e "call '../common/include/terminal.gnuplot' 'pngcairo' '$@'" "$<"
