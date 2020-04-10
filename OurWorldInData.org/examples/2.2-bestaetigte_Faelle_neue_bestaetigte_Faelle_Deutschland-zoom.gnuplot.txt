@@ -1,8 +1,8 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  load '../include/common.gnuplot.inc.txt'
 }
 if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
-  call "examples/owid.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  load 'examples/owid.gnuplot.inc.txt'
   set title "Bestätigte gegenüber neuen Fällen Deutschland (Zoom)"
 }
 

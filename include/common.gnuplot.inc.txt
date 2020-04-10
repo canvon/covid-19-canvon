@@ -1,20 +1,8 @@
+# common.gnuplot - This gnuplot include file is used for
+# common settings used by the examples of all data sources.
 
 # Avoid duplicating what this file set up.
 CommonLoaded = 1
-
-# Allow terminal type to be given as first argument to "call".
-# Fall back to qt (interactive graphics) if none was given.
-TermType = exists("ARG1") && strlen(ARG1) > 0 ? ARG1 : "qt"
-set terminal @TermType size 1024,768
-
-# When using another terminal type, an output might need to be given.
-TermOut = exists("ARG2") && strlen(ARG2) > 0 ? ARG2 : ""
-if (TermOut eq "" && TermType eq "png") {
-  TermOut = "out.png"
-}
-if (TermOut ne "") {
-  set output TermOut
-}
 
 # General preparation for our data environment.
 set datafile separator comma
@@ -34,7 +22,3 @@ SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value :
 
 # Selection of locations to plot on world comparison charts.
 WorldLocations = "World China Japan Germany Italy France Spain 'United Kingdom' 'United States'"
-
-# A chance to do anything else that might be needed.
-@ARG3
-

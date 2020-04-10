@@ -1,9 +1,9 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load '../include/common.gnuplot.inc.txt'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
-  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load 'examples/jhu.gnuplot.inc.txt'
   set title "Total deaths"
 }
 
-call "examples/2.0-raw_column.gnuplot.inc.txt" ARG1 ARG2 ARG3 'column("totalDeaths")'
+call 'examples/2.0-raw_column.gnuplot.inc.txt' 'column("totalDeaths")'

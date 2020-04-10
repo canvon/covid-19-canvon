@@ -1,11 +1,11 @@
 # Based on: ../OurWorldInData.org/examples/3.1-total_confirmed_cases_in_logarithmic_scale.gnuplot.txt
 
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load '../include/common.gnuplot.inc.txt'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
-  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load 'examples/jhu.gnuplot.inc.txt'
 }
 
-#set title ARG5
-plot for [Location in WorldLocations] DataFile using (TC(0)):(SelectLocation(Location, @ARG4)) title Location with lines
+#set title ARG2
+plot for [Location in WorldLocations] DataFile using (TC(0)):(SelectLocation(Location, @ARG1)) title Location with lines

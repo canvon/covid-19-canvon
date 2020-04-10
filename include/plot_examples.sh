@@ -62,7 +62,10 @@ for I in "$@"
 do
   echo "Plotting $I ..."
   TARGET_BASENAME="$(basename "$I" .gnuplot.txt)" || die "Extracting basename failed with exit code $?"
-  gnuplot -c "$I" png "${TARGET_DIR}/${TARGET_PREFIX}${TARGET_BASENAME}${TARGET_SUFFIX}" || die "gnuplot failed with exit code $?"
+  gnuplot \
+    -e "call '../include/terminal.gnuplot' 'png' '${TARGET_DIR}/${TARGET_PREFIX}${TARGET_BASENAME}${TARGET_SUFFIX}'" \
+    "$I" \
+    || die "gnuplot failed with exit code $?"
   echo "    '${TARGET_BASENAME}'," >>"${TARGET_SLIDE_TT2}" || die "Appending gnuplot result image to slide.html.tt2 failed"
 done
 

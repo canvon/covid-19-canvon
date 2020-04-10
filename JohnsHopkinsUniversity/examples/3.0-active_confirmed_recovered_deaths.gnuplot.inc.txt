@@ -1,12 +1,12 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load '../include/common.gnuplot.inc.txt'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
-  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load 'examples/jhu.gnuplot.inc.txt'
 }
 
-Location = ARG4
-set title "Active/confirmed/recovered/deaths: ".Location.ARG5
+Location = ARG1
+set title "Active/confirmed/recovered/deaths: ".Location.ARG2
 plot DataFile using (TC(0)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title "active cases" with lines, \
 	'' using (TC(0)):(SelectLocation(Location, column("totalConfirmed"))) title "total confirmed" with lines, \
 	'' using (TC(0)):(SelectLocation(Location, column("totalRecovered"))) title "total recovered" with lines, \

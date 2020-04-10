@@ -1,10 +1,10 @@
 # Based on: ../OurWorldInData.org/examples/2.2-bestaetigte_Faelle_neue_bestaetigte_Faelle_Deutschland-zoom.gnuplot.txt
 
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  load '../include/common.gnuplot.inc.txt'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
-  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+  load 'examples/jhu.gnuplot.inc.txt'
   set title "Bestätigte gegenüber neuen Fällen Deutschland (Zoom)"
 }
 

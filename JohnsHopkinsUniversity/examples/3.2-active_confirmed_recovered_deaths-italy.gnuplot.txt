@@ -1,11 +1,11 @@
 if (!exists("CommonLoaded") || CommonLoaded == 0) {
-  call "../include/common.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load '../include/common.gnuplot.inc.txt'
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
-  call "examples/jhu.gnuplot.inc.txt" ARG1 ARG2 ARG3
+  load 'examples/jhu.gnuplot.inc.txt'
 }
 
-if (ARGC < 5) {
-  ARG5 = ""
+if (ARGC < 2) {
+  ARG2 = ""
 }
-call "examples/3.0-active_confirmed_recovered_deaths.gnuplot.inc.txt" ARG1 ARG2 ARG3 "Italy" ARG5
+call 'examples/3.0-active_confirmed_recovered_deaths.gnuplot.inc.txt' "Italy" ARG2
