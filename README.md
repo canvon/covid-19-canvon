@@ -91,7 +91,7 @@ ready-to-upload as a bulk directory to your own web-space
 
 ## Supported data sources
 
-* [Johns Hopkins University](JohnsHopkinsUniversity/README.md)
-* [OurWorldInData.org](OurWorldInData.org/README.md)
+* [Johns Hopkins University](JohnsHopkinsUniversity/)
+* [OurWorldInData.org](./OurWorldInData.org/)
 
 
