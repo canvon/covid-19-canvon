@@ -61,7 +61,7 @@ echo
 for I in "$@"
 do
   echo "Plotting $I ..."
-  TARGET_BASENAME="$(basename "$I" .gnuplot.txt)" || die "Extracting basename failed with exit code $?"
+  TARGET_BASENAME="$(basename "$I" .gnuplot)" || die "Extracting basename failed with exit code $?"
   TARGET_FILE="${TARGET_DIR}/${TARGET_PREFIX}${TARGET_BASENAME}${TARGET_SUFFIX}"
   gnuplot \
     -e "call '../common/include/terminal.gnuplot' 'png' '${TARGET_FILE}'" \

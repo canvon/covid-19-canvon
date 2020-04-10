@@ -7,4 +7,4 @@ if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
 }
 
 set xrange ["2020-02-27":*]
-call "examples/2.1-bestaetigte_Faelle_neue_bestaetigte_Faelle_Deutschland.gnuplot.txt" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+call "examples/2.1-bestaetigte_Faelle_neue_bestaetigte_Faelle_Deutschland.gnuplot" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9

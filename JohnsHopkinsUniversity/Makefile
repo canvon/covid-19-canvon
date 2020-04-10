@@ -46,9 +46,9 @@ export SLIDE_TEMPLATE := ../common/include/slide-templated.html.tt2
 export SLIDE_TEMPLATE_CALLSITE_HEAD := examples/slide-templated-callsite-head.txt
 export SLIDE_TEMPLATE_CALLSITE_TAIL := examples/slide-templated-callsite-tail.txt
 
-GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt include/*.gnuplot ../common/include/*.gnuplot))
-GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot.txt))
-GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
+GNUPLOT_INCS = $(sort $(wildcard include/*.gnuplot ../common/include/*.gnuplot))
+GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot))
+GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot=.png)
 
 plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	# Uses TIMESTAMP, SLIDE_*.
