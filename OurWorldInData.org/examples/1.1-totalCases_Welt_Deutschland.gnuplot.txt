@@ -2,7 +2,7 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
   load '../common/include/common.gnuplot'
 }
 if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
-  load 'examples/owid.gnuplot.inc.txt'
+  load 'include/owid.gnuplot'
   set title "Gesamtzahl Fälle: Welt gegenüber Deutschland"
 }
 

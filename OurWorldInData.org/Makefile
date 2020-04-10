@@ -30,7 +30,7 @@ export SLIDE_TEMPLATE := ../common/include/slide-templated.html.tt2
 export SLIDE_TEMPLATE_CALLSITE_HEAD := examples/slide-templated-callsite-head.txt
 export SLIDE_TEMPLATE_CALLSITE_TAIL := examples/slide-templated-callsite-tail.txt
 
-GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt ../common/include/*.gnuplot))
+GNUPLOT_INCS = $(sort $(wildcard examples/*.gnuplot.inc.txt include/*.gnuplot ../common/include/*.gnuplot))
 GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot.txt))
 GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot.txt=.png)
 
