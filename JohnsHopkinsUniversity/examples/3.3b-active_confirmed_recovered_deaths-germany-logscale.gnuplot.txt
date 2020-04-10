@@ -5,5 +5,6 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
 }
 
-set logscale y
-call 'examples/3.3-active_confirmed_recovered_deaths-germany.gnuplot.txt' "..." " (logarithmic scale)"
+TitleSuffix = " (logarithmic scale)"
+call '../common/include/hook.gnuplot' 'append' 'PreplotHook' "set logscale y"
+call 'examples/3.3-active_confirmed_recovered_deaths-germany.gnuplot.txt'

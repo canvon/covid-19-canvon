@@ -3,7 +3,7 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
-  set title "Total confirmed cases"
 }
 
+TitleBase = "Total confirmed cases"
 call 'examples/2.0-raw_column.gnuplot.inc.txt' 'column("totalConfirmed")'

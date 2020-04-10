@@ -5,7 +5,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
 }
 
-if (ARGC < 2) {
-  ARG2 = ""
-}
-call 'examples/3.0-active_confirmed_recovered_deaths.gnuplot.inc.txt' "Germany" ARG2
+call 'examples/3.0-active_confirmed_recovered_deaths.gnuplot.inc.txt' "Germany"

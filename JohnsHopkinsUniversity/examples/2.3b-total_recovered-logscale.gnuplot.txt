@@ -3,8 +3,8 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
-  set title "Total recovered (logarithmic scale)"
 }
 
-set logscale y
+TitleSuffix = " (logarithmic scale)"
+call '../common/include/hook.gnuplot' 'append' 'PreplotHook' "set logscale y"
 call 'examples/2.3-total_recovered.gnuplot.txt'

@@ -3,8 +3,8 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 }
 if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
-  set title "Total deaths (logarithmic scale)"
 }
 
-set logscale y
+TitleSuffix = " (logarithmic scale)"
+call '../common/include/hook.gnuplot' 'append' 'PreplotHook' "set logscale y"
 call 'examples/2.2-total_deaths.gnuplot.txt'
