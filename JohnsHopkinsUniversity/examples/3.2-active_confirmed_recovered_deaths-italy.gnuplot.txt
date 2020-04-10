@@ -5,4 +5,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
 }
 
-call 'examples/3.0-active_confirmed_recovered_deaths.gnuplot.inc.txt' "Italy"
+call 'include/plot_active_confirmed_recovered_deaths.gnuplot' "Italy"
