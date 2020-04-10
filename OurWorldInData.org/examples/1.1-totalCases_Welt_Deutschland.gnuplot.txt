@@ -6,5 +6,5 @@ if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
   set title "Gesamtzahl Fälle: Welt gegenüber Deutschland"
 }
 
-plot DataFile using (TC(0)):(SelectLocation("World", column("totalCases"))) title "Welt" with lines, \
-	'' using (TC(0)):(SelectLocation("Germany", column("totalCases"))) title "Deutschland" with lines
+plot DataFile using (TC(1)):(SelectLocation("World", column("totalCases"))) title "Welt" with lines, \
+	'' using (TC(1)):(SelectLocation("Germany", column("totalCases"))) title "Deutschland" with lines

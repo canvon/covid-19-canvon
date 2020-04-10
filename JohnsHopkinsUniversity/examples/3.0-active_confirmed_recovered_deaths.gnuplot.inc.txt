@@ -7,7 +7,7 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 
 Location = ARG1
 set title "Active/confirmed/recovered/deaths: ".Location.ARG2
-plot DataFile using (TC(0)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title "active cases" with lines, \
-	'' using (TC(0)):(SelectLocation(Location, column("totalConfirmed"))) title "total confirmed" with lines, \
-	'' using (TC(0)):(SelectLocation(Location, column("totalRecovered"))) title "total recovered" with lines, \
-	'' using (TC(0)):(SelectLocation(Location, column("totalDeaths"))) title "total deaths" with lines
+plot DataFile using (TC(1)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title "active cases" with lines, \
+	'' using (TC(1)):(SelectLocation(Location, column("totalConfirmed"))) title "total confirmed" with lines, \
+	'' using (TC(1)):(SelectLocation(Location, column("totalRecovered"))) title "total recovered" with lines, \
+	'' using (TC(1)):(SelectLocation(Location, column("totalDeaths"))) title "total deaths" with lines

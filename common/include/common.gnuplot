@@ -17,7 +17,7 @@ set xdata time
 set key left
 
 # Predefine some helper functions, to make the actual plot commands shorter.
-TC(Dummy) = timecolumn(1,"%s")
+TC(I) = timecolumn(I,"%s")
 SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
 
 # Selection of locations to plot on world comparison charts.

@@ -10,5 +10,5 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 
 set ytics nomirror
 set y2tics
-plot ["2020-02-27":] DataFile using (TC(0)):(SelectLocation("Germany", column("totalConfirmed"))) title "bestätigte Fälle Deutschland" with lines, \
-	'' using (TC(0)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "neue bestätigte Fälle Deutschland" with lines
+plot ["2020-02-27":] DataFile using (TC(1)):(SelectLocation("Germany", column("totalConfirmed"))) title "bestätigte Fälle Deutschland" with lines, \
+	'' using (TC(1)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "neue bestätigte Fälle Deutschland" with lines

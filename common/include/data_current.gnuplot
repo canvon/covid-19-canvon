@@ -12,7 +12,7 @@ if (!exists("DataFile")) { exit error "Missing DataFile in environment." }
 # whereas everything works as expected without. So temporarily
 # disable it.
 unset xdata
-stats DataFile using (TC(0)):(SelectLocation(ARG2, @ARG3)) name ARG2 nooutput
+stats DataFile using (TC(1)):(SelectLocation(ARG2, @ARG3)) name ARG2 nooutput
 set xdata time
 
 set label @ARG1 strftime("Data current as of: %a,\n%Y-%m-%d %H:%M UTC", value(ARG2."_max_x")) \
