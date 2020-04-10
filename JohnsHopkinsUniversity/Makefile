@@ -59,7 +59,7 @@ clean-examples-inplace:
 
 plot-examples-inplace: $(GNUPLOT_PNGS)
 
-examples/%.png: examples/%.gnuplot.txt $(GNUPLOT_INCS) full_data_for_gnuplot.csv
+examples/%.png: examples/%.gnuplot $(GNUPLOT_INCS) full_data_for_gnuplot.csv
 	gnuplot -e "call '../common/include/terminal.gnuplot' 'png' '$@'" "$<"
 
 examples/slide-templated-demo.html: examples/slide-templated-demo.html.tt2 $(SLIDE_TEMPLATE)
