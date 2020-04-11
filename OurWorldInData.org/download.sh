@@ -46,7 +46,7 @@ then
 
 	mkdir -pv "$ARCHIVE_DIR" || die "Creating archive directory \"$ARCHIVE_DIR\" failed."
 
-	cp -avi "$TMPOUT_FILENAME" "$ARCHIVE_DIR/${DEST_BASENAME}-${TIMESTAMP}.${DEST_EXTENSION}" || die "Copying downloaded file \"$TMPOUT_FILENAME\" to archive directory \"$ARCHIVE_DIR\" failed."
+	cp -${C19C_CP_ARCHIVE_FLAG}vi "$TMPOUT_FILENAME" "$ARCHIVE_DIR/${DEST_BASENAME}-${TIMESTAMP}.${DEST_EXTENSION}" || die "Copying downloaded file \"$TMPOUT_FILENAME\" to archive directory \"$ARCHIVE_DIR\" failed."
 
 	mv -v "$TMPOUT_FILENAME" "$DEST_FILENAME" || die "Moving downloaded file to destination \"$DEST_FILENAME\" failed."
 else

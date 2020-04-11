@@ -26,9 +26,9 @@ DAILY_REPORT_DIR = COVID-19/csse_covid_19_data/csse_covid_19_daily_reports
 DAILY_REPORT_FILES = $(wildcard $(DAILY_REPORT_DIR)/*.csv)
 
 time_series_covid19_generated_recovered_global.csv: $(DAILY_REPORT_FILES) generate_time_series.pl
-	TZ=UTC ./generate_time_series.pl "$(DAILY_REPORT_DIR)" >"$@"
+	TZ=UTC $$C19C_PERL ./generate_time_series.pl "$(DAILY_REPORT_DIR)" >"$@"
 	mkdir -pv "archive/generated_data"
-	cp -avi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
+	cp -$${C19C_CP_ARCHIVE_FLAG}vi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
 # (As of 2020-03-25/-26, JHU is seemingly providing a "recovered" time series
 # again, but it does not seem to be updated with the other files... Keep
@@ -36,9 +36,9 @@ time_series_covid19_generated_recovered_global.csv: $(DAILY_REPORT_FILES) genera
 TIMESERIES_FILES = $(filter-out %/time_series_covid19_recovered_global.csv,$(wildcard COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_*_global.csv)) time_series_covid19_generated_recovered_global.csv
 
 full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
-	./convert_time_series.pl $(TIMESERIES_FILES) >"$@"
+	$$C19C_PERL ./convert_time_series.pl $(TIMESERIES_FILES) >"$@"
 	mkdir -pv "archive/generated_data"
-	cp -avi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
+	cp -$${C19C_CP_ARCHIVE_FLAG}vi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
 
 .PHONY: plot-examples clean-examples-inplace plot-examples-inplace
@@ -53,7 +53,7 @@ GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot=.png)
 
 plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	# Uses TIMESTAMP, SLIDE_*, C19C_GNUPLOT_TERMINAL.
-	../common/plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
+	$$C19C_BASH ../common/plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
 
 clean-examples-inplace:
 	-rm -f $(GNUPLOT_PNGS)
