@@ -28,6 +28,18 @@ END -%]
           width: auto;
         }
       }
+
+      /* Avoid plot "jumping" when switching to slide with more/less
+       * lines of heading. Ellipsise too long line, unless hovered/tapped.
+       */
+      .carousel-item h5 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .carousel-item h5:hover {
+        white-space: normal;
+      }
     </style>
 
     <title>[% data_source_short | html %] [% data_date | html %] - Covid-19 canvon rendering</title>
@@ -49,7 +61,7 @@ END -%]
 [% FOREACH plot_basename = plot_basenames -%]
 [% PROCESS changed_plot_basename -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
-                <h5>Plot [% plot_basename_human | html %]: ([% loop.count %]/[% loop.size %])</h5>
+                <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
                 <img src="[% plot_filename | uri %]" class="d-block w-100">
               </div>
 [% END -%]
