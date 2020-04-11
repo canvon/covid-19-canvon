@@ -24,7 +24,7 @@ END -%]
 
       @media (orientation: landscape) {
         .carousel-item img {
-          height: 100vh;
+          height: 85vh;
           width: auto;
         }
       }
