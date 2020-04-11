@@ -42,7 +42,7 @@ END -%]
 [% FOREACH plot_basename = plot_basenames -%]
 [% PROCESS changed_plot_basename -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
-                <h5>Plot from file <code>[% plot_filename %]</code>: ([% loop.count %]/[% loop.size %])</h5>
+                <h5>Plot [% plot_basename_human | html %]: ([% loop.count %]/[% loop.size %])</h5>
                 <img src="[% plot_filename %]" class="d-block w-100">
               </div>
 [% END -%]
