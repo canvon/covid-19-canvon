@@ -17,12 +17,12 @@ timestamp:
 update: download-full_data.csv full_data_for_gnuplot.csv
 
 download-full_data.csv:
-	bash ./download.sh "$(subst download-,,$@)"
+	$$C19C_BASH ./download.sh "$(subst download-,,$@)"
 
 full_data_for_gnuplot.csv: full_data.csv convert_full_data.pl
-	perl ./convert_full_data.pl <"$<" >"$@"
+	$$C19C_PERL ./convert_full_data.pl <"$<" >"$@"
 	mkdir -pv "archive/generated_data"
-	cp -vi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
+	cp -$${C19C_CP_ARCHIVE_FLAG}vi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
 
 .PHONY: plot-examples clean-examples-inplace plot-examples-inplace
@@ -37,7 +37,7 @@ GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot=.png)
 
 plot-examples: full_data_for_gnuplot.csv full_data.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	# Uses TIMESTAMP, SLIDE_*, C19C_GNUPLOT_TERMINAL.
-	bash ../common/plot_examples.sh owid "$<" $(GNUPLOT_SRCS)
+	$$C19C_BASH ../common/plot_examples.sh owid "$<" $(GNUPLOT_SRCS)
 
 clean-examples-inplace:
 	-rm -f $(GNUPLOT_PNGS)
