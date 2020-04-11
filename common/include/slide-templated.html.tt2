@@ -21,6 +21,13 @@ END -%]
       .carousel-control-next {
         filter: invert(100%);
       }
+
+      @media (orientation: landscape) {
+        .carousel-item img {
+          height: 100vh;
+          width: auto;
+        }
+      }
     </style>
 
     <title>[% data_source_short | html %] [% data_date | html %] - Covid-19 canvon rendering</title>
