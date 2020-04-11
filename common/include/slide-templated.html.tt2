@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-[% BLOCK set_plot_filename; plot_filename = plot_prefix _ plot_basename _ plot_suffix; END -%]
+[% BLOCK changed_plot_basename;
+  plot_filename = plot_prefix _ plot_basename _ plot_suffix;
+  plot_basename_human = plot_basename.replace('_', ' ').replace('-', ' - ');
+END -%]
   <!-- Based on the "Starter template" from https://getbootstrap.com/docs/4.4/getting-started/introduction/ -->
   <head>
     <!-- Required meta tags -->
@@ -17,6 +20,25 @@
       .carousel-control-prev,
       .carousel-control-next {
         filter: invert(100%);
+      }
+
+      @media (orientation: landscape) {
+        .carousel-item img {
+          height: 85vh;
+          width: auto;
+        }
+      }
+
+      /* Avoid plot "jumping" when switching to slide with more/less
+       * lines of heading. Ellipsise too long line, unless hovered/tapped.
+       */
+      .carousel-item h5 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .carousel-item h5:hover {
+        white-space: normal;
       }
     </style>
 
@@ -37,10 +59,10 @@
           <div id="plotsCarousel" class="carousel slide" data-interval="0" data-ride="carousel">
             <div class="carousel-inner">
 [% FOREACH plot_basename = plot_basenames -%]
-[% PROCESS set_plot_filename -%]
+[% PROCESS changed_plot_basename -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
-                <h5>Plot from file <code>[% plot_filename %]</code>: ([% loop.count %]/[% loop.size %])</h5>
-                <img src="[% plot_filename %]" class="d-block w-100">
+                <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
+                <img src="[% plot_filename | uri %]" class="d-block w-100">
               </div>
 [% END -%]
             </div>
@@ -77,10 +99,11 @@
           <h5>Jump to a plot directly:</h5>
           <ul>
 [% FOREACH plot_basename = plot_basenames -%]
-[% PROCESS set_plot_filename -%]
+[% PROCESS changed_plot_basename -%]
             <li>
-              <a href="#plotsCarousel" role="button" data-slide-to="[% loop.index %]">[% plot_basename | replace('_', ' ') | replace('-', ' - ') | html %]</a>
-              (<a href="[% plot_filename | uri %]">file</a>)
+              <a href="#plotsCarousel" role="button" data-slide-to="[% loop.index %]">[% plot_basename_human | html %]</a>
+              [<a href="[% plot_filename | uri %]">file</a>]
+              ([% loop.count %]/[% loop.size %])
             </li>
 [% END -%]
           </ul>
