@@ -37,7 +37,7 @@ GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot=.png)
 
 plot-examples: full_data_for_gnuplot.csv full_data.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	# Uses TIMESTAMP, SLIDE_*, C19C_GNUPLOT_TERMINAL.
-	../common/plot_examples.sh owid "$<" $(GNUPLOT_SRCS)
+	bash ../common/plot_examples.sh owid "$<" $(GNUPLOT_SRCS)
 
 clean-examples-inplace:
 	-rm -f $(GNUPLOT_PNGS)
