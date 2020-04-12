@@ -103,7 +103,7 @@ END -%]
 [% FOREACH plot_basename = plot_basenames -%]
 [% PROCESS changed_plot_basename -%]
             <li>
-              <a href="#plotsCarousel" role="button" data-slide-to="[% loop.index %]">[% plot_basename_human | html %]</a>
+              <a href="#plotsCarousel" onclick="$(this.hash)[0].scrollIntoView()" role="button" data-slide-to="[% loop.index %]">[% plot_basename_human | html %]</a>
               [<a href="[% plot_filename | uri %]">file</a>]
               ([% loop.count %]/[% loop.size %])
             </li>
