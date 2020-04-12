@@ -99,16 +99,16 @@ END -%]
         <div class="col border border-light rounded bg-light p-3">
 
           <h5>Jump to a plot directly:</h5>
-          <ul>
+          <ol>
 [% FOREACH plot_basename = plot_basenames -%]
 [% PROCESS changed_plot_basename -%]
             <li>
+              Plot
               <a href="#plotsCarousel" onclick="$(this.hash)[0].scrollIntoView()" role="button" data-slide-to="[% loop.index %]">[% plot_basename_human | html %]</a>
               [<a href="[% plot_filename | uri %]">file</a>]
-              ([% loop.count %]/[% loop.size %])
             </li>
 [% END -%]
-          </ul>
+          </ol>
 
         </div>
       </div>
