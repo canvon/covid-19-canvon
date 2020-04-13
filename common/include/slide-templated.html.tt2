@@ -76,7 +76,8 @@ END -%]
   </head>
   <body>
     <div class="container">
-      <h1>Covid-19 canvon rendering</h1>
+      <h1 id="top">Covid-19 canvon rendering</h1>
+[% BLOCK top_link %]<a class="d-block text-right" href="#top" role="button">Top</a>[% END -%]
 
       <nav class="nav border-bottom">
         <a class="nav-link" href="#intro">Intro</a>
@@ -89,7 +90,10 @@ END -%]
 
       <p>Plots based on data from <em>[% data_source | html %]</em> about the progression of <strong>Covid-19</strong> (<em>Corona Virus Disease started 2019</em>, see <a href="https://en.wikipedia.org/wiki/Coronavirus_disease_2019">Wikipedia</a>.)<br>
         Data as of <strong>[% data_date | html %]</strong>, (but see graphs for details).<br>
-        This is plot run <em>[% plot_run | html %]</em>.</p>
+        This is plot run <em>[% plot_run | html %]</em>.
+
+        [% PROCESS top_link %]
+      </p>
 
       <div class="row">
         <div class="col border border-light rounded bg-light p-3">
@@ -134,6 +138,8 @@ END -%]
           </p>
 [% END -%]
 
+          [% PROCESS top_link %]
+
         </div>
       </div>
 
@@ -154,6 +160,8 @@ END -%]
 [% END -%]
           </ol>
 
+          [% PROCESS top_link %]
+
         </div>
       </div>
 
@@ -165,6 +173,8 @@ END -%]
             <li><a href="..">Parent directory</a></li>
             <li><a href="/">Top of the site</a></li>
           </ul>
+
+          [% PROCESS top_link %]
 
         </div>
       </div>
