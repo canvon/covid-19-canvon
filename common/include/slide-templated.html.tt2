@@ -94,8 +94,9 @@ END -%]
                 <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
                 <img src="[% plot_filename | uri %]" class="d-block w-100">
                 <p>
-                  <a href="#plotsList" role="button">Full list</a> |
-                  <a href="#plotsList-[% loop.count %]" role="button">List entry</a>
+                  [<a href="#plotsList" role="button">Full&nbsp;list</a>].
+                  [<a href="#plotsList-[% loop.count %]" role="button">List&nbsp;entry</a>],
+                  [<a href="[% plot_filename | uri %]">file</a>]
                   for plot [% plot_basename_human | html %].
                 </p>
               </div>
