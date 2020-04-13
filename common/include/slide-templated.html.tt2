@@ -46,8 +46,8 @@ END -%]
          * clickable area and the non-image part of the slide, to help the user
          * avoid activating the wrong thing...
          */
-        padding-left: 1em;
-        padding-right: 1em;
+        padding-left: 1rem;
+        padding-right: 1rem;
       }
 
       /* Avoid plot "jumping" when switching to slide with more/less
