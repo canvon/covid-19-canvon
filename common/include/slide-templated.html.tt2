@@ -203,7 +203,9 @@ END -%]
         }
 
         // Actually run slide.
-        $('#plotsCarousel').carousel(slide)
+        var plots = $('#plotsCarousel')
+        plots.carousel(slide)
+        plots[0].scrollIntoView()
       }
 
       function runFragmentSlideNum(args) {
@@ -222,7 +224,9 @@ END -%]
         var slide = slideNum - 1
 
         // Actually run slide.
-        $('#plotsCarousel').carousel(slide)
+        var plots = $('#plotsCarousel')
+        plots.carousel(slide)
+        plots[0].scrollIntoView()
       }
 
       function runFragment(hash) {
