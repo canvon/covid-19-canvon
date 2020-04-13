@@ -194,22 +194,28 @@ END -%]
       function updateFragment(slideIndex) {
         // Note: document.location (is supposed to be read-only and)
         //   breaks on Firefox mobile... window.location seems to work.
-        var hash = window.location.hash
+        var loc = window.location
+        var hash = loc.hash
+        var updater = function(url) { loc.assign(url) }
         if (hash.length == 0 ||
             hash === '#' ||
             hash === '#plotsCarousel' ||
             hash.startsWith('#slideIndex=') ||
             hash.startsWith('#slideNum='))
         {
-          // (Stop using slideIndex, in favour of slideNum.)
-          //var updatedHash = '#slideIndex=' + slideIndex.toString()
-          var slideNum = slideIndex + 1
-          var updatedHash = '#slideNum=' + slideNum.toString()
-
-          // (Stop using Location.hash, as that bloats the back button history...)
-          //window.location.hash = updatedHash
-          window.location.replace(updatedHash)
+          // Avoid using Location.assign(), as that bloats the back button history...
+          updater = function(url) { loc.replace(url) }
         }
+
+        // (Stop using slideIndex, in favour of slideNum.)
+        //var updatedHash = '#slideIndex=' + slideIndex.toString()
+        var slideNum = slideIndex + 1
+        var updatedHash = '#slideNum=' + slideNum.toString()
+
+        // (Ways used to update the URL hash so far.)
+        //window.location.hash = updatedHash
+        //window.location.replace(updatedHash)
+        updater(updatedHash)
       }
 
 
