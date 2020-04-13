@@ -31,6 +31,25 @@ END -%]
         }
       }
 
+      /* The carousel navigation buttons (left/right) go through the full height
+       * of the slide (but only left 15%, right 15%; which is 30% of the width),
+       * so avoid putting tappable/clickable content behind them. (width: 70%)
+       */
+      .carousel-item h5,
+      .carousel-item p {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        /* text-align: center; <- Doesn't look good, but note that we tried it. */
+
+        /* Have a little bit of space between (invisible) navigation button
+         * clickable area and the non-image part of the slide, to help the user
+         * avoid activating the wrong thing...
+         */
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+
       /* Avoid plot "jumping" when switching to slide with more/less
        * lines of heading. Ellipsise too long line, unless hovered/tapped.
        */
@@ -65,6 +84,11 @@ END -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
                 <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
                 <img src="[% plot_filename | uri %]" class="d-block w-100">
+                <p>
+                  <a href="#plotsList" role="button">Full list</a> |
+                  <a href="#plotsList-[% loop.count %]" role="button">List entry</a>
+                  for plot [% plot_basename_human | html %].
+                </p>
               </div>
 [% END -%]
             </div>
@@ -98,11 +122,11 @@ END -%]
       <div class="row mt-3">
         <div class="col border border-light rounded bg-light p-3">
 
-          <h5>Jump to a plot directly:</h5>
+          <h5 id="plotsList">Jump to a plot directly:</h5>
           <ol>
 [% FOREACH plot_basename = plot_basenames -%]
 [% PROCESS changed_plot_basename -%]
-            <li>
+            <li id="plotsList-[% loop.count %]">
               Plot
               <a href="#plotsCarousel"
                 onclick="updateFragment(this.getAttribute('data-slide-to')); $(this.hash)[0].scrollIntoView()"
