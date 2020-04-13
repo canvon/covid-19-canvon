@@ -61,6 +61,15 @@ END -%]
       .carousel-item h5:hover {
         white-space: normal;
       }
+
+
+      /* Help the user identify the target (e.g., of the link they clicked
+       * before) to which the page's URL now points. Should highlight the
+       * selected list item against the other list items, for example.
+       */
+      :target {
+        font-weight: bold;
+      }
     </style>
 
     <title>[% data_source_short | html %] [% data_date | html %] - Covid-19 canvon rendering</title>
