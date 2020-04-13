@@ -126,7 +126,7 @@ END -%]
           </div>
 [% IF data_source_linking.defined -%]
 
-<p>
+          <p>
             Public data from [% data_source | html %] collected from: <a href="[% data_source_linking | url %]">[% data_source_linking | html %]</a>
           </p>
 [% END -%]
