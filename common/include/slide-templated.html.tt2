@@ -104,7 +104,9 @@ END -%]
 [% PROCESS changed_plot_basename -%]
             <li>
               Plot
-              <a href="#plotsCarousel" onclick="$(this.hash)[0].scrollIntoView()" role="button" data-slide-to="[% loop.index %]">[% plot_basename_human | html %]</a>
+              <a href="#plotsCarousel"
+                onclick="updateFragment(this.getAttribute('data-slide-to')); $(this.hash)[0].scrollIntoView()"
+                role="button" data-slide-to="[% loop.index %]">[% plot_basename_human | html %]</a>
               [<a href="[% plot_filename | uri %]">file</a>]
             </li>
 [% END -%]
