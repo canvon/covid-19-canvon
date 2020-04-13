@@ -77,7 +77,15 @@ END -%]
   <body>
     <div class="container">
       <h1>Covid-19 canvon rendering</h1>
-      <h2>[% data_source_short | html %] [% data_date | html %]</h2>
+
+      <nav class="nav border-bottom">
+        <a class="nav-link" href="#intro">Intro</a>
+        <a class="nav-link" href="#plotsCarousel">Plots</a>
+        <a class="nav-link" href="#plotsList">List</a>
+        <a class="nav-link" href="#siteNav">Site</a>
+      </nav>
+
+      <h2 id="intro">[% data_source_short | html %] [% data_date | html %]</h2>
 
       <p>Plots based on data from <em>[% data_source | html %]</em> about the progression of <strong>Covid-19</strong> (<em>Corona Virus Disease started 2019</em>, see <a href="https://en.wikipedia.org/wiki/Coronavirus_disease_2019">Wikipedia</a>.)<br>
         Data as of <strong>[% data_date | html %]</strong>, (but see graphs for details).<br>
@@ -152,7 +160,7 @@ END -%]
       <div class="row mt-3">
         <div class="col border border-light rounded bg-light p-3">
 
-          <h5>Jump to elsewhere:</h5>
+          <h5 id="siteNav">Jump to elsewhere:</h5>
           <ul>
             <li><a href="..">Parent directory</a></li>
             <li><a href="/">Top of the site</a></li>
