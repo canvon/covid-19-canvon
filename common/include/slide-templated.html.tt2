@@ -146,7 +146,7 @@ END -%]
       <div class="row">
         <div class="col border border-light rounded bg-light p-3">
 
-          <div id="plotsCarousel" class="carousel slide" data-interval="0" data-ride="carousel">
+          <div id="plotsCarousel" class="carousel slide" data-touch="false" data-interval="0" data-ride="carousel">
             <div class="carousel-inner">
 [% FOREACH plot_basename = plot_basenames -%]
 [% PROCESS changed_plot_basename -%]
