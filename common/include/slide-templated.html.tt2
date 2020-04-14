@@ -31,6 +31,54 @@ END -%]
         }
       }
 
+      /* Have 1:1 version of the plot image on a slide
+       * after a tap on the image, on mobile. Tap on anything else
+       * to go back, or (using JavaScript) double-tap on the image.
+       */
+      .carousel-item.active:focus-within {
+        /* Have a pseudo-fullscreen environment, without the hassle
+           of switching forth and back. */
+        position: fixed;
+        left:   0;
+        top:    0;
+        right:  0;
+        bottom: 0;
+        z-index: 10;
+        overflow: scroll;
+
+        /* Try to not show anything from the regular page
+           while in pseudo-fullscreen.
+           Also note that plot image backgrounds are white. */
+        background-color: black;
+        color: white;
+      }
+      .carousel-item.active:focus-within img {
+        /* Have full plot image width/height. */
+        width:  auto !important;
+        height: auto !important;
+
+        /* Have space around the plot image for the user to tap on
+           to leave pseudo-fullscreen mode.
+           Note that the right margin seems to be missing, though. */
+        margin: 3rem;
+      }
+      /* Override things from further below. */
+      .carousel-item.active:focus-within h5,
+      .carousel-item.active:focus-within p {
+        /* This seems to be a way to prevent the slide heading/footer
+           from becoming multi-line, but allow it to run off the screen,
+           here. As long as the plot image is large enough, the text
+           will be visible by scrolling the image. */
+        white-space: nowrap;
+        overflow: visible;
+
+        /* The slide is pseudo-fullscreened, there are no prev/next arrows
+           to respect. */
+        width: auto;
+        margin-left:  0;
+        margin-right: 0;
+      }
+
       /* The carousel navigation buttons (left/right) go through the full height
        * of the slide (but only left 15%, right 15%; which is 30% of the width),
        * so avoid putting tappable/clickable content behind them. (width: 70%)
@@ -104,7 +152,7 @@ END -%]
 [% PROCESS changed_plot_basename -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
                 <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
-                <img src="[% plot_filename | uri %]" class="d-block w-100">
+                <img src="[% plot_filename | uri %]" class="d-block w-100" tabindex="0" ondblclick="this.blur()">
                 <p>
                   [<a href="#plotsList" role="button">Full&nbsp;list</a>].
                   [<a href="#plotsList-[% loop.count %]" role="button">List&nbsp;entry</a>],
