@@ -35,7 +35,7 @@ END -%]
        * after a tap on the image, on mobile. Tap on anything else
        * to go back, or (using JavaScript) double-tap on the image.
        */
-      .carousel-item.active.focus-img {
+      .carousel-item.active.detail-view {
         /* Have a pseudo-fullscreen environment, without the hassle
            of switching forth and back. */
         position: fixed;
@@ -52,7 +52,7 @@ END -%]
         background-color: black;
         color: white;
       }
-      .carousel-item.active.focus-img img {
+      .carousel-item.active.detail-view img {
         /* Have full plot image width/height. */
         width:  auto !important;
         height: auto !important;
@@ -63,8 +63,8 @@ END -%]
         margin: 3rem;
       }
       /* Override things from further below. */
-      .carousel-item.active.focus-img h5,
-      .carousel-item.active.focus-img p {
+      .carousel-item.active.detail-view h5,
+      .carousel-item.active.detail-view p {
         /* This seems to be a way to prevent the slide heading/footer
            from becoming multi-line, but allow it to run off the screen,
            here. As long as the plot image is large enough, the text
@@ -330,15 +330,15 @@ END -%]
         case 39:  // Right arrow
           // Try to prevent bubbling up, to keep the carousel from sliding
           // when the user is likely to want to scroll the large image, instead.
-          if ($(this.parentElement).hasClass('focus-img')) {
+          if ($(this.parentElement).hasClass('detail-view')) {
             e.stopImmediatePropagation()
           }
           break
         case 27:  // Escape
-          $('.carousel-item').removeClass('focus-img')
+          $('.carousel-item').removeClass('detail-view')
           break
         case 13:  // Enter
-          $(this.parentElement).addClass('focus-img')
+          $(this.parentElement).addClass('detail-view')
           break
         }
       }
@@ -356,16 +356,16 @@ END -%]
         // Try to avoid a slide sliding back into view
         // and immediately jumping "back" to a previous
         // pseudo-fullscreen state, by clearing all pseudo-fullscreen.
-        $('.carousel-item').removeClass('focus-img')
+        $('.carousel-item').removeClass('detail-view')
       })
 
 
       var plotsImgs = $('.carousel-item img')
 
-      plotsImgs.focus(function() { $(this.parentElement).addClass('focus-img') })
+      plotsImgs.focus(function() { $(this.parentElement).addClass('detail-view') })
       plotsImgs.blur (function() {
         setTimeout(function(jqElem) {
-          jqElem.removeClass('focus-img')
+          jqElem.removeClass('detail-view')
         }, 100, $(this.parentElement))
       })
       /* ^ Use timeout to give the links in the slide a chance to trigger,
@@ -373,8 +373,8 @@ END -%]
        *   the pointer...
        */
 
-      plotsImgs.click   (function() { $(this.parentElement).addClass   ('focus-img') })
-      plotsImgs.dblclick(function() { $(this.parentElement).toggleClass('focus-img') })
+      plotsImgs.click   (function() { $(this.parentElement).addClass   ('detail-view') })
+      plotsImgs.dblclick(function() { $(this.parentElement).toggleClass('detail-view') })
 
       // Have a bit better keyboard support, too.
       plotsImgs.keydown(handlePlotImgKey)
