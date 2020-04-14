@@ -355,8 +355,8 @@ END -%]
 
         // Try to avoid a slide sliding back into view
         // and immediately jumping "back" to a previous
-        // pseudo-fullscreen state, by clearing all focus.
-        $('.carousel-item *').each(function() { this.blur() })
+        // pseudo-fullscreen state, by clearing all pseudo-fullscreen.
+        $('.carousel-item').removeClass('focus-img')
       })
 
 
