@@ -324,6 +324,25 @@ END -%]
         updater(updatedHash)
       }
 
+      function handlePlotImgKey(e) {
+        switch (e.which) {
+        case 37:  // Left arrow
+        case 39:  // Right arrow
+          // Try to prevent bubbling up, to keep the carousel from sliding
+          // when the user is likely to want to scroll the large image, instead.
+          if ($(this.parentElement).hasClass('focus-img')) {
+            e.stopImmediatePropagation()
+          }
+          break
+        case 27:  // Escape
+          $('.carousel-item').removeClass('focus-img')
+          break
+        case 13:  // Enter
+          $(this.parentElement).addClass('focus-img')
+          break
+        }
+      }
+
 
       // Wire events.
 
@@ -356,6 +375,9 @@ END -%]
 
       plotsImgs.click   (function() { $(this.parentElement).addClass   ('focus-img') })
       plotsImgs.dblclick(function() { $(this.parentElement).toggleClass('focus-img') })
+
+      // Have a bit better keyboard support, too.
+      plotsImgs.keydown(handlePlotImgKey)
 
     </script>
   </body>
