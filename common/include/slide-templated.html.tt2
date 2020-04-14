@@ -35,7 +35,7 @@ END -%]
        * after a tap on the image, on mobile. Tap on anything else
        * to go back, or (using JavaScript) double-tap on the image.
        */
-      .carousel-item.active:focus-within {
+      .carousel-item.active.focus-img {
         /* Have a pseudo-fullscreen environment, without the hassle
            of switching forth and back. */
         position: fixed;
@@ -52,7 +52,7 @@ END -%]
         background-color: black;
         color: white;
       }
-      .carousel-item.active:focus-within img {
+      .carousel-item.active.focus-img img {
         /* Have full plot image width/height. */
         width:  auto !important;
         height: auto !important;
@@ -63,8 +63,8 @@ END -%]
         margin: 3rem;
       }
       /* Override things from further below. */
-      .carousel-item.active:focus-within h5,
-      .carousel-item.active:focus-within p {
+      .carousel-item.active.focus-img h5,
+      .carousel-item.active.focus-img p {
         /* This seems to be a way to prevent the slide heading/footer
            from becoming multi-line, but allow it to run off the screen,
            here. As long as the plot image is large enough, the text
@@ -152,7 +152,10 @@ END -%]
 [% PROCESS changed_plot_basename -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
                 <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
-                <img src="[% plot_filename | uri %]" class="d-block w-100" tabindex="0" ondblclick="this.blur()">
+                <img src="[% plot_filename | uri %]" class="d-block w-100" tabindex="0"
+                  onclick="$(this.parentElement).addClass('focus-img')"
+                  onblur="$(this.parentElement).removeClass('focus-img')"
+                  ondblclick="this.blur()">
                 <p>
                   [<a href="#plotsList" role="button">Full&nbsp;list</a>].
                   [<a href="#plotsList-[% loop.count %]" role="button">List&nbsp;entry</a>],
