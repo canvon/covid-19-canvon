@@ -153,8 +153,9 @@ END -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
                 <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
                 <img src="[% plot_filename | uri %]" class="d-block w-100" tabindex="0"
-                  onclick="$(this.parentElement).addClass('focus-img')"
+                  onfocus="$(this.parentElement).addClass('focus-img')"
                   onblur="setTimeout(function(jqElem) { jqElem.removeClass('focus-img') }, 100, $(this.parentElement))"
+                  onclick="$(this.parentElement).addClass('focus-img')"
                   ondblclick="$(this.parentElement).toggleClass('focus-img')"
                 >
                 <!-- ^ Use timeout to give the links in the slide a chance
