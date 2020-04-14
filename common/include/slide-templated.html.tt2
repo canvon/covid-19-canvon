@@ -152,15 +152,7 @@ END -%]
 [% PROCESS changed_plot_basename -%]
               <div class="carousel-item[% IF loop.index == 0; ' active'; END %]">
                 <h5>([% loop.count %]/[% loop.size %]) Plot [% plot_basename_human | html %]:</h5>
-                <img src="[% plot_filename | uri %]" class="d-block w-100" tabindex="0"
-                  onfocus="$(this.parentElement).addClass('focus-img')"
-                  onblur="setTimeout(function(jqElem) { jqElem.removeClass('focus-img') }, 100, $(this.parentElement))"
-                  onclick="$(this.parentElement).addClass('focus-img')"
-                  ondblclick="$(this.parentElement).toggleClass('focus-img')"
-                >
-                <!-- ^ Use timeout to give the links in the slide a chance
-                       to trigger, before removing the class will snatch them
-                       away from below the pointer... -->
+                <img src="[% plot_filename | uri %]" class="d-block w-100" tabindex="0">
                 <p>
                   [<a href="#plotsList" role="button">Full&nbsp;list</a>].
                   [<a href="#plotsList-[% loop.count %]" role="button">List&nbsp;entry</a>],
@@ -347,6 +339,23 @@ END -%]
         // pseudo-fullscreen state, by clearing all focus.
         $('.carousel-item *').each(function() { this.blur() })
       })
+
+
+      var plotsImgs = $('.carousel-item img')
+
+      plotsImgs.focus(function() { $(this.parentElement).addClass('focus-img') })
+      plotsImgs.blur (function() {
+        setTimeout(function(jqElem) {
+          jqElem.removeClass('focus-img')
+        }, 100, $(this.parentElement))
+      })
+      /* ^ Use timeout to give the links in the slide a chance to trigger,
+       *   before removing the class will snatch them away from below
+       *   the pointer...
+       */
+
+      plotsImgs.click   (function() { $(this.parentElement).addClass   ('focus-img') })
+      plotsImgs.dblclick(function() { $(this.parentElement).toggleClass('focus-img') })
 
     </script>
   </body>
