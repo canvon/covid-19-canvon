@@ -348,7 +348,7 @@ END -%]
           $(this.parentElement).addClass('detail-view')
           break
         case 27:  // Escape
-          $('.carousel-item').removeClass('detail-view')
+          $(this).parents('.carousel').find('.carousel-item').removeClass('detail-view')
           break
         }
       }
@@ -360,19 +360,21 @@ END -%]
         runFragment(window.location.hash)
       })
 
-
-      var plotsCarousel = $('#plotsCarousel')
-
-      plotsCarousel.on('slide.bs.carousel', function (e) {
+      $('#plotsCarousel').on('slide.bs.carousel', function (e) {
         updateFragment(e.to)
+      })
 
+
+      var carousels = $('.carousel')
+
+      carousels.on('slide.bs.carousel', function (e) {
         // Try to avoid a slide sliding back into view
         // and immediately jumping "back" to a previous
         // pseudo-fullscreen state, by clearing all pseudo-fullscreen.
-        $('.carousel-item').removeClass('detail-view')
+        $(this).find('.carousel-item').removeClass('detail-view')
       })
 
-      plotsCarousel.on('slid.bs.carousel', function (e) {
+      carousels.on('slid.bs.carousel', function (e) {
         var elem = $(this)
         if (elem.has('img:focus').length > 0) {
           // Transfer focus from previous slide's img to this slide's.
@@ -381,12 +383,12 @@ END -%]
       })
 
 
-      var plotsImgs = $('.carousel-item img')
+      var carouselImgs = $('.carousel-item img')
 
       // (Focus is not special anymore; mouse/touch will use clicks to activate,
       // keyboard will use keydown (Enter/Escape).)
-      //plotsImgs.focus(function() { $(this.parentElement).addClass('detail-view') })
-      plotsImgs.blur (function() {
+      //carouselImgs.focus(function() { $(this.parentElement).addClass('detail-view') })
+      carouselImgs.blur (function() {
         var carouselItem = $(this.parentElement)
 
         // Losing focus to leave pseudo-fullscreen mode?
@@ -400,11 +402,11 @@ END -%]
         }
       })
 
-      plotsImgs.click   (function() { $(this.parentElement).addClass   ('detail-view') })
-      plotsImgs.dblclick(function() { $(this.parentElement).toggleClass('detail-view') })
+      carouselImgs.click   (function() { $(this.parentElement).addClass   ('detail-view') })
+      carouselImgs.dblclick(function() { $(this.parentElement).toggleClass('detail-view') })
 
       // Have a bit better keyboard support, too.
-      plotsImgs.keydown(handlePlotImgKey)
+      carouselImgs.keydown(handlePlotImgKey)
 
     </script>
   </body>
