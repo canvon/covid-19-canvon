@@ -335,6 +335,14 @@ END -%]
           }
           break
 
+        // Provide alternative bindings, to be able to slide from detail-view.
+        case 78:  // n
+          $(this).parents('.carousel').carousel('next')
+          break
+        case 80:  // p
+          $(this).parents('.carousel').carousel('prev')
+          break
+
         // Provide means to explicitly enter/leave detail-view via keyboard.
         case 13:  // Enter
           $(this.parentElement).addClass('detail-view')
