@@ -331,7 +331,7 @@ END -%]
           // Try to prevent bubbling up, to keep the carousel from sliding
           // when the user is likely to want to scroll the large image, instead.
           if ($(this.parentElement).hasClass('detail-view')) {
-            e.stopImmediatePropagation()
+            e.stopPropagation()
           }
           break
         case 27:  // Escape
