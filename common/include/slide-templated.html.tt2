@@ -350,7 +350,10 @@ END -%]
         runFragment(window.location.hash)
       })
 
-      $('#plotsCarousel').on('slide.bs.carousel', function (e) {
+
+      var plotsCarousel = $('#plotsCarousel')
+
+      plotsCarousel.on('slide.bs.carousel', function (e) {
         updateFragment(e.to)
 
         // Try to avoid a slide sliding back into view
@@ -359,10 +362,20 @@ END -%]
         $('.carousel-item').removeClass('detail-view')
       })
 
+      plotsCarousel.on('slid.bs.carousel', function (e) {
+        var elem = $(this)
+        if (elem.has('img:focus').length > 0) {
+          // Transfer focus from previous slide's img to this slide's.
+          elem.find('.carousel-item.active img')[0].focus()
+        }
+      })
+
 
       var plotsImgs = $('.carousel-item img')
 
-      plotsImgs.focus(function() { $(this.parentElement).addClass('detail-view') })
+      // (Focus is not special anymore; mouse/touch will use clicks to activate,
+      // keyboard will use keydown (Enter/Escape).)
+      //plotsImgs.focus(function() { $(this.parentElement).addClass('detail-view') })
       plotsImgs.blur (function() {
         var carouselItem = $(this.parentElement)
 
