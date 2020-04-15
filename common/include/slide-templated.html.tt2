@@ -364,14 +364,18 @@ END -%]
 
       plotsImgs.focus(function() { $(this.parentElement).addClass('detail-view') })
       plotsImgs.blur (function() {
-        setTimeout(function(jqElem) {
-          jqElem.removeClass('detail-view')
-        }, 100, $(this.parentElement))
+        var carouselItem = $(this.parentElement)
+
+        // Losing focus to leave pseudo-fullscreen mode?
+        if (carouselItem.hasClass('detail-view'))
+        {
+          /* Use timeout to give the links in the slide a chance to trigger,
+           * before removing the class will snatch them away from below
+           * the pointer...
+           */
+          setTimeout(function() { carouselItem.removeClass('detail-view') }, 100)
+        }
       })
-      /* ^ Use timeout to give the links in the slide a chance to trigger,
-       *   before removing the class will snatch them away from below
-       *   the pointer...
-       */
 
       plotsImgs.click   (function() { $(this.parentElement).addClass   ('detail-view') })
       plotsImgs.dblclick(function() { $(this.parentElement).toggleClass('detail-view') })
