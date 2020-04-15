@@ -334,11 +334,13 @@ END -%]
             e.stopPropagation()
           }
           break
-        case 27:  // Escape
-          $('.carousel-item').removeClass('detail-view')
-          break
+
+        // Provide means to explicitly enter/leave detail-view via keyboard.
         case 13:  // Enter
           $(this.parentElement).addClass('detail-view')
+          break
+        case 27:  // Escape
+          $('.carousel-item').removeClass('detail-view')
           break
         }
       }
