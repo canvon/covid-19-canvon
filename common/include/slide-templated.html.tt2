@@ -236,6 +236,32 @@ END -%]
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script>
+      const URL_HASH_KEY_SLIDE_INDEX = 'slideIndex'
+      const URL_HASH_KEY_SLIDE_NUM   = 'slideNum'
+      const URL_HASH_PREFIX_SLIDE_INDEX = `#${URL_HASH_KEY_SLIDE_INDEX}=`
+      const URL_HASH_PREFIX_SLIDE_NUM   = `#${URL_HASH_KEY_SLIDE_NUM}=`
+      const URL_HASH_EMPTY = '#'
+
+      const ID_NAME_PLOTS_CAROUSEL = 'plotsCarousel'
+      const URL_HASH_PLOTS_CAROUSEL = `#${ID_NAME_PLOTS_CAROUSEL}`
+
+      const CLASS_NAME_DETAIL_VIEW = 'detail-view'
+      const CLASS_NAME_ACTIVE = 'active'
+      const CLASS_NAME_CAROUSEL      = 'carousel'
+      const CLASS_NAME_CAROUSEL_ITEM = 'carousel-item'
+
+      const SELECTOR_PLOTS_CAROUSEL        = `#${ID_NAME_PLOTS_CAROUSEL}`
+      const SELECTOR_CAROUSELS             = `.${CLASS_NAME_CAROUSEL}`
+      const SELECTOR_CAROUSEL_ITEMS        = `.${CLASS_NAME_CAROUSEL_ITEM}`
+      const SELECTOR_CAROUSEL_ITEMS_ACTIVE = `.${CLASS_NAME_CAROUSEL_ITEM}.${CLASS_NAME_ACTIVE}`
+
+      const CAROUSEL_ARG_NEXT = 'next'
+      const CAROUSEL_ARG_PREV = 'prev'
+
+      const CAROUSEL_EVENT_SLIDE_START = 'slide.bs.carousel'
+      const CAROUSEL_EVENT_SLIDE_DONE  = 'slid.bs.carousel'
+
+
       function runFragmentSlideIndex(args) {
         if (args.length != 2) {
           return
@@ -251,7 +277,7 @@ END -%]
         }
 
         // Actually run slide.
-        let plots = $('#plotsCarousel')
+        let plots = $(SELECTOR_PLOTS_CAROUSEL)
         plots.carousel(slide)
         plots[0].scrollIntoView()
       }
@@ -272,7 +298,7 @@ END -%]
         let slide = slideNum - 1
 
         // Actually run slide.
-        let plots = $('#plotsCarousel')
+        let plots = $(SELECTOR_PLOTS_CAROUSEL)
         plots.carousel(slide)
         plots[0].scrollIntoView()
       }
@@ -289,10 +315,10 @@ END -%]
         }
 
         let what = args[0]
-        if (what === 'slideIndex') {
+        if (what === URL_HASH_KEY_SLIDE_INDEX) {
           runFragmentSlideIndex(args)
         }
-        else if (what === 'slideNum') {
+        else if (what === URL_HASH_KEY_SLIDE_NUM) {
           runFragmentSlideNum(args)
         }
       }
@@ -304,19 +330,19 @@ END -%]
         let hash = loc.hash
         let updater = function(url) { loc.assign(url) }
         if (hash.length == 0 ||
-            hash === '#' ||
-            hash === '#plotsCarousel' ||
-            hash.startsWith('#slideIndex=') ||
-            hash.startsWith('#slideNum='))
+            hash === URL_HASH_EMPTY ||
+            hash === URL_HASH_PLOTS_CAROUSEL ||
+            hash.startsWith(URL_HASH_PREFIX_SLIDE_INDEX) ||
+            hash.startsWith(URL_HASH_PREFIX_SLIDE_NUM))
         {
           // Avoid using Location.assign(), as that bloats the back button history...
           updater = function(url) { loc.replace(url) }
         }
 
         // (Stop using slideIndex, in favour of slideNum.)
-        //let updatedHash = '#slideIndex=' + slideIndex.toString()
+        //let updatedHash = URL_HASH_PREFIX_SLIDE_INDEX + slideIndex.toString()
         let slideNum = slideIndex + 1
-        let updatedHash = '#slideNum=' + slideNum.toString()
+        let updatedHash = URL_HASH_PREFIX_SLIDE_NUM + slideNum.toString()
 
         // (Ways used to update the URL hash so far.)
         //window.location.hash = updatedHash
@@ -330,25 +356,28 @@ END -%]
         case 39:  // Right arrow
           // Try to prevent bubbling up, to keep the carousel from sliding
           // when the user is likely to want to scroll the large image, instead.
-          if ($(this.parentElement).hasClass('detail-view')) {
+          if ($(this.parentElement).hasClass(CLASS_NAME_DETAIL_VIEW)) {
             e.stopPropagation()
           }
           break
 
         // Provide alternative bindings, to be able to slide from detail-view.
         case 78:  // n
-          $(this).parents('.carousel').carousel('next')
+          $(this).parents(SELECTOR_CAROUSELS).carousel(CAROUSEL_ARG_NEXT)
           break
         case 80:  // p
-          $(this).parents('.carousel').carousel('prev')
+          $(this).parents(SELECTOR_CAROUSELS).carousel(CAROUSEL_ARG_PREV)
           break
 
         // Provide means to explicitly enter/leave detail-view via keyboard.
         case 13:  // Enter
-          $(this.parentElement).addClass('detail-view')
+          $(this.parentElement).addClass(CLASS_NAME_DETAIL_VIEW)
           break
         case 27:  // Escape
-          $(this).parents('.carousel').find('.carousel-item').removeClass('detail-view')
+          $(this).
+            parents(SELECTOR_CAROUSELS).
+            find(SELECTOR_CAROUSEL_ITEMS).
+            removeClass(CLASS_NAME_DETAIL_VIEW)
           break
         }
       }
@@ -360,30 +389,30 @@ END -%]
         runFragment(window.location.hash)
       })
 
-      $('#plotsCarousel').on('slide.bs.carousel', function (e) {
+      $(SELECTOR_PLOTS_CAROUSEL).on(CAROUSEL_EVENT_SLIDE_START, function (e) {
         updateFragment(e.to)
       })
 
 
-      let carousels = $('.carousel')
+      let carousels = $(SELECTOR_CAROUSELS)
 
-      carousels.on('slide.bs.carousel', function (e) {
+      carousels.on(CAROUSEL_EVENT_SLIDE_START, function (e) {
         // Try to avoid a slide sliding back into view
         // and immediately jumping "back" to a previous
         // pseudo-fullscreen state, by clearing all pseudo-fullscreen.
-        $(this).find('.carousel-item').removeClass('detail-view')
+        $(this).find(SELECTOR_CAROUSEL_ITEMS).removeClass(CLASS_NAME_DETAIL_VIEW)
       })
 
-      carousels.on('slid.bs.carousel', function (e) {
+      carousels.on(CAROUSEL_EVENT_SLIDE_DONE, function (e) {
         let elem = $(this)
         if (elem.has('img:focus').length > 0) {
           // Transfer focus from previous slide's img to this slide's.
-          elem.find('.carousel-item.active img')[0].focus()
+          elem.find(`${SELECTOR_CAROUSEL_ITEMS_ACTIVE} img`)[0].focus()
         }
       })
 
 
-      let carouselImgs = $('.carousel-item img')
+      let carouselImgs = $(`${SELECTOR_CAROUSEL_ITEMS} img`)
 
       // (Focus is not special anymore; mouse/touch will use clicks to activate,
       // keyboard will use keydown (Enter/Escape).)
@@ -392,18 +421,18 @@ END -%]
         let carouselItem = $(this.parentElement)
 
         // Losing focus to leave pseudo-fullscreen mode?
-        if (carouselItem.hasClass('detail-view'))
+        if (carouselItem.hasClass(CLASS_NAME_DETAIL_VIEW))
         {
           /* Use timeout to give the links in the slide a chance to trigger,
            * before removing the class will snatch them away from below
            * the pointer...
            */
-          setTimeout(function() { carouselItem.removeClass('detail-view') }, 100)
+          setTimeout(function() { carouselItem.removeClass(CLASS_NAME_DETAIL_VIEW) }, 100)
         }
       })
 
-      carouselImgs.click   (function() { $(this.parentElement).addClass   ('detail-view') })
-      carouselImgs.dblclick(function() { $(this.parentElement).toggleClass('detail-view') })
+      carouselImgs.click   (function() { $(this.parentElement).addClass   (CLASS_NAME_DETAIL_VIEW) })
+      carouselImgs.dblclick(function() { $(this.parentElement).toggleClass(CLASS_NAME_DETAIL_VIEW) })
 
       // Have a bit better keyboard support, too.
       carouselImgs.keydown(handlePlotImgKey)
