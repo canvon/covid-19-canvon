@@ -240,18 +240,18 @@ END -%]
         if (args.length != 2) {
           return
         }
-        var slideStr = args[1]
+        let slideStr = args[1]
         if (!(slideStr.length > 0)) {
           return
         }
 
-        var slide = parseInt(slideStr)
+        let slide = parseInt(slideStr)
         if (isNaN(slide) || !(slide >= 0)) {
           return
         }
 
         // Actually run slide.
-        var plots = $('#plotsCarousel')
+        let plots = $('#plotsCarousel')
         plots.carousel(slide)
         plots[0].scrollIntoView()
       }
@@ -260,19 +260,19 @@ END -%]
         if (args.length != 2) {
           return
         }
-        var slideNumStr = args[1]
+        let slideNumStr = args[1]
         if (!(slideNumStr.length > 0)) {
           return
         }
 
-        var slideNum = parseInt(slideNumStr)
+        let slideNum = parseInt(slideNumStr)
         if (isNaN(slideNum) || !(slideNum >= 1)) {
           return
         }
-        var slide = slideNum - 1
+        let slide = slideNum - 1
 
         // Actually run slide.
-        var plots = $('#plotsCarousel')
+        let plots = $('#plotsCarousel')
         plots.carousel(slide)
         plots[0].scrollIntoView()
       }
@@ -281,14 +281,14 @@ END -%]
         if (hash.length == 0) {
           return
         }
-        var frag = hash.substr(1)
+        let frag = hash.substr(1)
 
-        var args = frag.split('=', 2)
+        let args = frag.split('=', 2)
         if (args.length != 2) {
           return
         }
 
-        var what = args[0]
+        let what = args[0]
         if (what === 'slideIndex') {
           runFragmentSlideIndex(args)
         }
@@ -300,9 +300,9 @@ END -%]
       function updateFragment(slideIndex) {
         // Note: document.location (is supposed to be read-only and)
         //   breaks on Firefox mobile... window.location seems to work.
-        var loc = window.location
-        var hash = loc.hash
-        var updater = function(url) { loc.assign(url) }
+        let loc = window.location
+        let hash = loc.hash
+        let updater = function(url) { loc.assign(url) }
         if (hash.length == 0 ||
             hash === '#' ||
             hash === '#plotsCarousel' ||
@@ -314,9 +314,9 @@ END -%]
         }
 
         // (Stop using slideIndex, in favour of slideNum.)
-        //var updatedHash = '#slideIndex=' + slideIndex.toString()
-        var slideNum = slideIndex + 1
-        var updatedHash = '#slideNum=' + slideNum.toString()
+        //let updatedHash = '#slideIndex=' + slideIndex.toString()
+        let slideNum = slideIndex + 1
+        let updatedHash = '#slideNum=' + slideNum.toString()
 
         // (Ways used to update the URL hash so far.)
         //window.location.hash = updatedHash
@@ -365,7 +365,7 @@ END -%]
       })
 
 
-      var carousels = $('.carousel')
+      let carousels = $('.carousel')
 
       carousels.on('slide.bs.carousel', function (e) {
         // Try to avoid a slide sliding back into view
@@ -375,7 +375,7 @@ END -%]
       })
 
       carousels.on('slid.bs.carousel', function (e) {
-        var elem = $(this)
+        let elem = $(this)
         if (elem.has('img:focus').length > 0) {
           // Transfer focus from previous slide's img to this slide's.
           elem.find('.carousel-item.active img')[0].focus()
@@ -383,13 +383,13 @@ END -%]
       })
 
 
-      var carouselImgs = $('.carousel-item img')
+      let carouselImgs = $('.carousel-item img')
 
       // (Focus is not special anymore; mouse/touch will use clicks to activate,
       // keyboard will use keydown (Enter/Escape).)
       //carouselImgs.focus(function() { $(this.parentElement).addClass('detail-view') })
       carouselImgs.blur (function() {
-        var carouselItem = $(this.parentElement)
+        let carouselItem = $(this.parentElement)
 
         // Losing focus to leave pseudo-fullscreen mode?
         if (carouselItem.hasClass('detail-view'))
