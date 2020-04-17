@@ -16,7 +16,7 @@ Plot runs are sometimes uploaded to some sub-directory of
 the `slide.html` (mentioned above) can be browsed/linked
 for easy swiping through all slides (of a plot run) --
 especially on smartphone/touch devices like Android --, e.g.,
-[JHU 20200408 plotted 20200409\_174934](https://files.canvon.de/covid-19-canvon/plots/jhu/20200409_174934/slide.html).
+[JHU 20200416 plotted 20200417\_124951](https://files.canvon.de/covid-19-canvon/plots/jhu/20200417_124951/slide.html).
 
 
 ## Overview
