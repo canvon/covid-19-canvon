@@ -50,3 +50,6 @@ SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value :
 
 # Selection of locations to plot on world comparison charts.
 WorldLocations = "World China Japan Germany Italy France Spain 'United Kingdom' 'United States'"
+
+# Common text of attribution.
+CommonAttribution = "Generator: gnuplot via https://github.com/canvon/covid-19-canvon"
