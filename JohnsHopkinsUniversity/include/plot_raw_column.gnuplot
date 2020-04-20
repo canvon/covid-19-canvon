@@ -9,7 +9,11 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 
 if (!(ARGC == 1)) { exit error "Usage: call '...' ColumnSpec" }
 
+# Let the World curve be dashed, so it will differ from United States
+# (or whatever duplicates arise from having more than 8 curves on the plot).
+DashtypeFromLocation(s) = s eq "World" ? 2 : 1
+
 #set title ARG2
 call '../common/include/title.gnuplot'
 call '../common/include/hook.gnuplot' 'run' 'PreplotHook'
-plot for [Location in WorldLocations] DataFile using (TC(1)):(SelectLocation(Location, @ARG1)) title Location with lines
+plot for [Location in WorldLocations] DataFile using (TC(1)):(SelectLocation(Location, @ARG1)) title Location with lines dashtype DashtypeFromLocation(Location)
