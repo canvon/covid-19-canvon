@@ -5,6 +5,6 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
 }
 
-TitleBase = "Total deaths per 100,000"
+TitleBase = "Total deaths per 100,000 population"
 call 'include/read_population.gnuplot'
 call 'include/plot_raw_column.gnuplot' 'column("totalDeaths")*PerPopulation(Location)'
