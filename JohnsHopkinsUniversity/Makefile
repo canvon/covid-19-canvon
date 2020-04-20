@@ -40,6 +40,11 @@ full_data_for_gnuplot.csv: $(TIMESERIES_FILES) convert_time_series.pl
 	mkdir -pv "archive/generated_data"
 	cp -$${C19C_CP_ARCHIVE_FLAG}vi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
 
+population_for_gnuplot.csv: COVID-19/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv convert_population.pl
+	$$C19C_PERL ./convert_population.pl "$<" >"$@"
+	mkdir -pv "archive/generated_data"
+	cp -$${C19C_CP_ARCHIVE_FLAG}vi "$@" "archive/generated_data/$(basename $@)-$(TIMESTAMP)$(suffix $@)"
+
 
 .PHONY: plot-examples clean-examples-inplace plot-examples-inplace
 
