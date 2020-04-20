@@ -52,11 +52,12 @@ export SLIDE_TEMPLATE := ../common/include/slide-templated.html.tt2
 export SLIDE_TEMPLATE_CALLSITE_HEAD := examples/slide-templated-callsite-head.txt
 export SLIDE_TEMPLATE_CALLSITE_TAIL := examples/slide-templated-callsite-tail.txt
 
+GNUPLOT_CSVS = full_data_for_gnuplot.csv population_for_gnuplot.csv
 GNUPLOT_INCS = $(sort $(wildcard include/*.gnuplot ../common/include/*.gnuplot))
 GNUPLOT_SRCS = $(sort $(wildcard examples/*.gnuplot))
 GNUPLOT_PNGS = $(GNUPLOT_SRCS:.gnuplot=.png)
 
-plot-examples: full_data_for_gnuplot.csv $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
+plot-examples: $(GNUPLOT_CSVS) $(SLIDE_TEMPLATE) $(SLIDE_TEMPLATE_CALLSITE_HEAD) $(SLIDE_TEMPLATE_CALLSITE_TAIL)
 	# Uses TIMESTAMP, SLIDE_*, C19C_GNUPLOT_TERMINAL.
 	$$C19C_BASH ../common/plot_examples.sh jhu "$<" $(GNUPLOT_SRCS)
 
@@ -65,7 +66,7 @@ clean-examples-inplace:
 
 plot-examples-inplace: $(GNUPLOT_PNGS)
 
-examples/%.png: examples/%.gnuplot $(GNUPLOT_INCS) full_data_for_gnuplot.csv
+examples/%.png: examples/%.gnuplot $(GNUPLOT_INCS) $(GNUPLOT_CSVS)
 	gnuplot -e "call '../common/include/terminal.gnuplot' '$$C19C_GNUPLOT_TERMINAL' '$@'" "$<"
 
 examples/slide-templated-demo.html: examples/slide-templated-demo.html.tt2 $(SLIDE_TEMPLATE)

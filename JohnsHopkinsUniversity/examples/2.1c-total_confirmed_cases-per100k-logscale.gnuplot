@@ -7,4 +7,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 
 TitleSuffix = " (logarithmic scale)"
 call '../common/include/hook.gnuplot' 'append' 'PreplotHook' "set logscale y"
-call 'examples/2.1-total_confirmed_cases.gnuplot'
+call 'examples/2.1b-total_confirmed_cases-per100k.gnuplot'

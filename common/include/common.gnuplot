@@ -36,6 +36,14 @@ set grid mxtics
 # as the plots will usually end right there. ...
 set key left
 
+# General helpers.
+#
+# Removes one space from the argument if there is one.
+# E.g., "United States" -> "UnitedStates".
+# This may be necessary when giving output variable names
+# (e.g., to the "stats" command).
+Unspace(s) = (pos=strstrt(s, ' ')) == 0 ? s : s[1:pos-1].s[pos+1:]
+
 # Predefine some helper functions, to make the actual plot commands shorter.
 TC(I) = timecolumn(I,"%s")
 SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
