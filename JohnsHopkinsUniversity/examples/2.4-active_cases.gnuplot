@@ -5,5 +5,5 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
 }
 
-set title "Currently active cases"
-plot for [Location in WorldLocations] DataFile using (TC(1)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title Location with lines
+TitleBase = "Currently active cases"
+call 'include/plot_raw_column.gnuplot' 'column("totalConfirmed") - column("totalDeaths") - column("totalRecovered")'
