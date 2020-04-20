@@ -5,6 +5,6 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
 }
 
-TitleSuffix = " (logarithmic scale)"
-call '../common/include/hook.gnuplot' 'append' 'PreplotHook' "set logscale y"
-call 'examples/2.2-total_deaths.gnuplot'
+TitleBase = "Total deaths per 100,000"
+call 'include/read_population.gnuplot'
+call 'include/plot_raw_column.gnuplot' 'column("totalDeaths")*PerPopulation(Location)'

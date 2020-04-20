@@ -7,4 +7,4 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 
 TitleBase = "Total confirmed cases per 100,000"
 call 'include/read_population.gnuplot'
-call 'include/plot_raw_column.gnuplot' 'column("totalConfirmed")*100000./value("Population".Unspace(Location)."_max")
+call 'include/plot_raw_column.gnuplot' 'column("totalConfirmed")*PerPopulation(Location)'
