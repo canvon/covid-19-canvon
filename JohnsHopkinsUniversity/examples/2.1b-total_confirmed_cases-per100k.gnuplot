@@ -5,6 +5,7 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
   load 'include/jhu.gnuplot'
 }
 
-TitleBase = "Total confirmed cases per 100,000 population"
+TitleBase = "Confirmed cases per 100,000 population"
+set ylabel "Affected if population was 100,000 [people]"
 call 'include/read_population.gnuplot'
 call 'include/plot_raw_column.gnuplot' 'column("totalConfirmed")*PerPopulation(Location)'

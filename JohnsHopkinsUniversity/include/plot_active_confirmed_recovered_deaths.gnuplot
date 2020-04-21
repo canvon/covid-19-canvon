@@ -10,6 +10,7 @@ Location = ARG1
 
 TitlePrefix = "Active/confirmed/recovered/deaths: "
 TitleBase = Location
+set ylabel "Total affected [people]"
 call '../common/include/title.gnuplot'
 call '../common/include/hook.gnuplot' 'run' 'PreplotHook'
 plot DataFile using (TC(1)):(SelectLocation(Location, column("totalConfirmed") - column("totalDeaths") - column("totalRecovered"))) title "active cases" with lines, \

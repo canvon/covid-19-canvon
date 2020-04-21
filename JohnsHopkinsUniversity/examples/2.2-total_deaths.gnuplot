@@ -6,4 +6,5 @@ if (!exists("JHULoaded") || JHULoaded == 0) {
 }
 
 TitleBase = "Total deaths"
+set ylabel "Total affected [people]"
 call 'include/plot_raw_column.gnuplot' 'column("totalDeaths")'
