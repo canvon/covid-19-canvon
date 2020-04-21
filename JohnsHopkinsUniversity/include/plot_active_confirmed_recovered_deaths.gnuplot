@@ -14,12 +14,16 @@ TotalConfirmedMacro = WrapLoc('column("totalConfirmed")')
 TotalRecoveredMacro = WrapLoc('column("totalRecovered")')
 TotalDeathsMacro    = WrapLoc('column("totalDeaths")')
 
+do for [Curve in "ActiveCases TotalConfirmed TotalRecovered TotalDeaths"] {
+	call '../common/include/read_final_value.gnuplot' (WorldDateEnd) Unspace(Location).Curve value(Curve.'Macro')
+}
+
 TitlePrefix = "Active/confirmed/recovered/deaths: "
 TitleBase = Location
 set ylabel "Total affected [people]"
 call '../common/include/title.gnuplot'
 call '../common/include/hook.gnuplot' 'run' 'PreplotHook'
-plot DataFile using (TC(1)):(@ActiveCasesMacro) title "active cases" with lines, \
-	'' using (TC(1)):(@TotalConfirmedMacro) title "total confirmed" with lines, \
-	'' using (TC(1)):(@TotalRecoveredMacro) title "total recovered" with lines, \
-	'' using (TC(1)):(@TotalDeathsMacro) title "total deaths" with lines
+plot DataFile using (TC(1)):(@ActiveCasesMacro) title "active cases".value(Unspace(Location).'ActiveCasesAddendum') with lines, \
+	'' using (TC(1)):(@TotalConfirmedMacro) title "total confirmed".value(Unspace(Location).'TotalConfirmedAddendum') with lines, \
+	'' using (TC(1)):(@TotalRecoveredMacro) title "total recovered".value(Unspace(Location).'TotalRecoveredAddendum') with lines, \
+	'' using (TC(1)):(@TotalDeathsMacro) title "total deaths".value(Unspace(Location).'TotalDeathsAddendum') with lines
