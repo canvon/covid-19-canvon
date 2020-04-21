@@ -13,6 +13,7 @@ set label 101 "Plot based on public data from JHU (Johns Hopkins University, USA
 
 # Place "Data current as of:" box at the lower-right hand corner of the screen.
 call '../common/include/data_current.gnuplot' 102 "World" 'column("totalConfirmed")'
+WorldDateEnd = World_max_x
 
 # Have an x axis label, below the right end (graph 1,0) of the graph,
 # then go down 2 lines to end up below the xtics labels.
