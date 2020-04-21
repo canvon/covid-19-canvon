@@ -13,4 +13,4 @@ set y2tics
 set ylabel "Total affected [people]"
 set y2label "Change of affected [people per day]"
 plot ["2020-02-27":] DataFile using (TC(1)):(SelectLocation("Germany", column("totalConfirmed"))) title "total confirmed cases" with lines, \
-	'' using (TC(1)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "change to previous value" with lines
+	'' using (TC(1)):(SelectLocation("Germany", column("newConfirmed"))) axis x1y2 title "change to previous value" with fsteps
