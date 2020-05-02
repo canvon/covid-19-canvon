@@ -48,6 +48,10 @@ Unspace(s) = (pos=strstrt(s, ' ')) == 0 ? s : s[1:pos-1].s[pos+1:]
 TC(I) = timecolumn(I,"%s")
 SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
 
+# Let the World curve be dashed, so it will differ from United States
+# (or whatever duplicates arise from having more than 8 curves on the plot).
+DashtypeFromLocation(s) = (s eq "World" || s eq "China" || s eq "Japan") ? 2 : 1
+
 # Selection of locations to plot on world comparison charts.
 WorldLocations = "World China Japan Germany Italy France Spain 'United Kingdom' 'United States' Sweden Netherlands"
 
