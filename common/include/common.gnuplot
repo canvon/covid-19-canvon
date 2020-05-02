@@ -49,7 +49,7 @@ TC(I) = timecolumn(I,"%s")
 SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value : NaN
 
 # Selection of locations to plot on world comparison charts.
-WorldLocations = "World China Japan Germany Italy France Spain 'United Kingdom' 'United States'"
+WorldLocations = "World China Japan Germany Italy France Spain 'United Kingdom' 'United States' Sweden Netherlands"
 
 # Common text of attribution.
 CommonAttribution = "Generator: gnuplot via https://github.com/canvon/covid-19-canvon"

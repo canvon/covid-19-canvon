@@ -16,7 +16,7 @@ do for [Location in WorldLocations] {
 
 # Let the World curve be dashed, so it will differ from United States
 # (or whatever duplicates arise from having more than 8 curves on the plot).
-DashtypeFromLocation(s) = s eq "World" ? 2 : 1
+DashtypeFromLocation(s) = (s eq "World" || s eq "China" || s eq "Japan") ? 2 : 1
 
 #set title ARG2
 call '../common/include/title.gnuplot'
