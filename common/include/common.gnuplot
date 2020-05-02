@@ -50,7 +50,7 @@ SelectLocation(Location, Value) = stringcolumn("location") eq Location ? Value :
 
 # Let the World curve be dashed, so it will differ from United States
 # (or whatever duplicates arise from having more than 8 curves on the plot).
-DashtypeFromLocation(s) = (s eq "World" || s eq "China" || s eq "Japan") ? 2 : 1
+DashtypeFromLocation(s) = (s eq "World" || s eq "China" || s eq "Japan" || s eq "International") ? 2 : 1
 
 # Selection of locations to plot on world comparison charts.
 WorldLocations = "World China Japan Germany Italy France Spain 'United Kingdom' 'United States' Sweden Netherlands"
