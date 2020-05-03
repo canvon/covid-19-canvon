@@ -7,4 +7,5 @@ if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
 
 set logscale y
 set title "Total confirmed deaths in logarithmic scale"
+set ylabel "Total affected [people]"
 plot for [Location in WorldLocations." International"] DataFile using (TC(1)):(SelectLocation(Location, column("totalDeaths"))) title Location with lines dashtype DashtypeFromLocation(Location)
