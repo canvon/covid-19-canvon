@@ -3,8 +3,8 @@ if (!exists("CommonLoaded") || CommonLoaded == 0) {
 }
 if (!exists("OWIDLoaded") || OWIDLoaded == 0) {
   load 'include/owid.gnuplot'
-  set title "Gesamtzahl Fälle: Welt gegenüber Deutschland (logarithmische Skala)"
+  set title "Total confirmed cases: World vs Germany (logarithmic scale)"
 }
 
 set logscale y
-call "examples/1.1-totalCases_Welt_Deutschland.gnuplot" ARG1 ARG2 ARG3 ARG4 ARG5 ARG6 ARG7 ARG8 ARG9
+call "examples/1.1-total_cases_World_Germany.gnuplot"
