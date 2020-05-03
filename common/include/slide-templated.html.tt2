@@ -25,7 +25,7 @@ END -%]
       @media (orientation: landscape) {
         /* Enlarge carousel image. */
         .carousel-item img {
-          height: 85vh;
+          max-height: 85vh;
           width: auto !important;  /* Ensure correct aspect ratio (AR). */
           margin-left: auto;
           margin-right: auto;
