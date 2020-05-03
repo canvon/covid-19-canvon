@@ -6,6 +6,13 @@ OWIDLoaded = 1
 
 DataFile = 'full_data_for_gnuplot.csv'
 
+# Dates go back too far already for OWID/ECDC data set.
+# Labeling every week overwrites each-other, so only
+# label every two weeks. (Except for -zoom, where we
+# override it back.)
+set xtics 2*7*24*60*60
+set mxtics 2*7
+
 # Place credit on the bottom of the graph.
 set bmargin 6
 set label 100 CommonAttribution at character 1,3.5
