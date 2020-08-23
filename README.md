@@ -1,5 +1,7 @@
 # covid-19-canvon
 
+[![JHU 20200822 plotted 20200823\_140224](https://img.shields.io/badge/rendering-JHU%2020200822-informational)](https://files.canvon.de/covid-19-canvon/plots/jhu/20200823_140224/slide.html#slideNum=12)
+
 Make plots from publically available data
 about covid-19 (Corona Virus Disease started 2019).
 
@@ -15,8 +17,8 @@ Plot runs are sometimes uploaded to some sub-directory of
 <https://files.canvon.de/covid-19-canvon/plots/>; there,
 the `slide.html` (mentioned above) can be browsed/linked
 for easy swiping through all slides (of a plot run) --
-especially on smartphone/touch devices like Android --, e.g.,
-[JHU 20200822 plotted 20200823\_140224](https://files.canvon.de/covid-19-canvon/plots/jhu/20200823_140224/slide.html#slideNum=12).
+especially on smartphone/touch devices like Android.
+An example is linked from the "rendering" badge above.
 
 
 ## Overview
