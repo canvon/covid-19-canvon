@@ -23,8 +23,13 @@ set xdata time
 # makes that decision and whether I could simply guide it to choose Monday
 # instead.
 #
-set xtics 7*24*60*60
-set mxtics 7
+#set xtics 7*24*60*60
+#set mxtics 7
+#
+# As of 2020-08-23, there has been so much time
+# that we need a less detailed scale. (1 month, each week)
+set xtics 4*7*24*60*60
+set mxtics 4
 
 # Have a grid. Default + one line for every day. Should help enormously
 # reading data points out of the plots; but will make them a little harder
