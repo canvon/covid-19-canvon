@@ -10,8 +10,12 @@ DataFile = 'full_data_for_gnuplot.csv'
 # Labeling every week overwrites each-other, so only
 # label every two weeks. (Except for -zoom, where we
 # override it back.)
-set xtics 2*7*24*60*60
-set mxtics 2*7
+#set xtics 2*7*24*60*60
+#set mxtics 2*7
+# As of 2020-08-23, there has been so much time
+# that we need a less detailed scale. (1 month, each week)
+set xtics 4*7*24*60*60
+set mxtics 4
 
 # Place credit on the bottom of the graph.
 set bmargin 6
