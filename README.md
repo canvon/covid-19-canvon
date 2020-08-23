@@ -16,7 +16,7 @@ see [below (overview)](#overview).
 Plot runs are sometimes uploaded to some sub-directory of
 <https://files.canvon.de/covid-19-canvon/plots/>; there,
 the `slide.html` (mentioned above) can be browsed/linked
-for easy swiping through all slides (of a plot run) --
+for easy <del>swiping</del><ins>clicking</ins> through all slides (of a plot run) --
 especially on smartphone/touch devices like Android.
 An example is linked from the "rendering" badge above.
 
